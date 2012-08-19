@@ -5,6 +5,7 @@ ca - BIC Calendar es un simple calendari per marcar esdeveniments. Un plugin de 
 
 en - BIC Calendar is a simple calendar to mark events, a jQuery plugin and Twitter Bootstrap.
 
+
 Dependencias
 ------------
 
@@ -13,8 +14,7 @@ Dependencias
 
 Use
 ---
-
-`<script>
+<script>
 $(document).ready( function(){
 	//create a array [data, text, link, color] 
 	var events = [
@@ -26,7 +26,7 @@ $(document).ready( function(){
 		events: events
         });
 } );
-</script>`
+</script>
 
 Example
 -------
