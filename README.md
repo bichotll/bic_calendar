@@ -14,19 +14,19 @@ Dependencias
 
 Use
 ---
-<script>
-$(document).ready( function(){
-	//create a array [data, text, link, color] 
-	var events = [
-		[ '21/1/2010', 'SENTMENAT', '', '#999' ],
-		[ '23/5/2012', 'SANTA COLOMA DE GRAMENET  - Barcelonès Nord', 'http://ca.gettingcontacts.com/events/view/gramanet', '#999' ]
-	];
-        //create the calendar
-        $('#calendari_lateral').bic_calendar({
-		events: events
-        });
-} );
-</script>
+`
+	$(document).ready( function(){
+		//create a array [data, text, link, color] 
+		var events = [
+			[ '21/1/2010', 'SENTMENAT', '', '#999' ],
+			[ '23/5/2012', 'SANTA COLOMA DE GRAMENET  - Barcelonès Nord', 'http://ca.gettingcontacts.com/events/view/gramanet', '#999' ]
+		];
+		//create the calendar
+		$('#calendari_lateral').bic_calendar({
+			events: events
+		});
+	} );
+`
 
 Example
 -------
