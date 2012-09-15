@@ -14,9 +14,31 @@ $.fn.bic_calendar = function(options) {
         var calendario;
         var capaDiasMes;
         var capaTextoMesAnoActual = $('<div class="visualmesano"></div>');
+
+        //var id_calendari = "#bic_calendar" + ;
         
-        var dias = ["l", "m", "x", "j", "v", "s", "d"];
-        var nombresMes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+        var dias;
+        if ( typeof opts.dias != "undefined" )
+            dias = opts.dias;
+        else
+            dias = ["l", "m", "x", "j", "v", "s", "d"];
+
+        var nombresMes;
+        if ( typeof opts.nombresMes != "undefined" )
+            nombresMes = opts.nombresMes;
+        else
+            nombresMes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        
+        var show_days;
+        if ( typeof opts.show_days != "undefined" )
+            show_days = opts.show_days;
+        else
+            show_days = true;
+
+
+
+
+
 		
         //element llamado
         var elem = $(this);
@@ -26,33 +48,37 @@ $.fn.bic_calendar = function(options) {
         
         
         
-        
-        
-        
-        
-        /*** functions ***/        
+        /*** functions ***/
+
+        //funció mostra literals setmana
+        function llistar_literals_setmana(){
+            if ( show_days != false ){
+                var capaDiasSemana = $('<tr class="dias_semana" >');
+                var codigoInsertar = '';
+                $(dias).each(function(indice, valor){
+                    codigoInsertar += '<td';
+                    if (indice==0){
+                        codigoInsertar += ' class="primero"';
+                    }
+                    if (indice==6){
+                        codigoInsertar += ' class="domingo ultimo"';
+                    }
+                    codigoInsertar += ">" + valor + '</td>';
+                });
+                codigoInsertar += '</tr>';
+                capaDiasSemana.append(codigoInsertar);
+
+                capaDiasMes.append(capaDiasSemana);
+            }
+        }
         
         //funció para mostrar el calendari
         function mostrarCalendario(){
-            
-            //dias de la semana
-            var capaDiasSemana = $('<tr class="dias_semana" >');
-            var codigoInsertar = '';
-            $(dias).each(function(indice, valor){
-                codigoInsertar += '<td';
-                if (indice==0){
-                    codigoInsertar += ' class="primero"';
-                }
-                if (indice==6){
-                    codigoInsertar += ' class="domingo ultimo"';
-                }
-                codigoInsertar += ">" + valor + '</td>';
-            });
-            codigoInsertar += '</tr>';
-            capaDiasSemana.append(codigoInsertar);
-				
+
             //capa con los días del mes
             capaDiasMes = $('<table class="diasmes table table">');
+
+            llistar_literals_setmana();
 				
             //un objeto de la clase date para calculo de fechas
             var objFecha = new Date();
@@ -82,32 +108,28 @@ $.fn.bic_calendar = function(options) {
 				
 				
             //controles para ir al mes siguiente / anterior
-            var botonMesSiguiente = $('<div class="span4" ><a href="#" class="botonmessiguiente span4"><i class="icon-arrow-right" ></i></a></div>');
+            var botonMesSiguiente = $('<div class="span3" ><a href="#" class="botonmessiguiente span4"><i class="icon-arrow-right" ></i></a></div>');
             botonMesSiguiente.click(function(e){
                 e.preventDefault();
                 mes = (mes + 1) % 12;
                 if (mes==0)
                     ano++;
-                capaDiasMes.empty();
-                muestraDiasMes(mes, ano);
-                marcarEventos(mes, ano);
+                canvi_mes(mes, ano);
             })
-            var botonMesAnterior = $('<div class="span4" ><a href="#" class="botonmesanterior span4"><i class="icon-arrow-left" ></i></a></div>');
+            var botonMesAnterior = $('<div class="span3" ><a href="#" class="botonmesanterior span4"><i class="icon-arrow-left" ></i></a></div>');
             botonMesAnterior.click(function(e){
                 e.preventDefault();
                 mes = (mes - 1);
                 if (mes==-1){
                     ano--;
-                    mes = 11
+                    mes = 11;
                 }	
-                capaDiasMes.empty();
-                muestraDiasMes(mes, ano);
-                marcarEventos(mes, ano);
+                canvi_mes(mes, ano);
             })
 				
             //capa para mostrar el texto del mes y ano actual
             var capaTextoMesAno = $('<div class="header row-fluid"></div>');
-            var capaTextoMesAnoControl = $('<div colspan=5 class="mesyano span4"></div>');
+            var capaTextoMesAnoControl = $('<div colspan=5 class="mesyano span6"></div>');
             capaTextoMesAno.append(botonMesAnterior);
             capaTextoMesAno.append(capaTextoMesAnoControl);
             capaTextoMesAno.append(botonMesSiguiente);
@@ -126,7 +148,12 @@ $.fn.bic_calendar = function(options) {
             marcarEventos(mes, ano);
         }
 		
-                
+        function canvi_mes(mes, ano){
+            capaDiasMes.empty();
+            llistar_literals_setmana();
+            muestraDiasMes(mes, ano);
+            marcarEventos(mes, ano);
+        }       
                 
         function muestraDiasMes(mes, ano){
             //console.log("muestro (mes, ano): ", mes, " ", ano)
@@ -247,12 +274,10 @@ $.fn.bic_calendar = function(options) {
         }
         
         function marcarEventos(mes, ano){
-            //[['10/03/2012', 'Jornada1', 'http://google.es'], []]
             var t_mes = mes + 1;
             var events = opts.events;
             
             for(var i=0; i< events.length; i++) {
-                //alert(events[i][0]);
                 
                 if ( events[i][0].split('/')[1] == t_mes && events[i][0].split('/')[2] == ano ){
                     $('#bic_cal_' + events[i][0].replace(/\//g, "_") ).addClass('event');
@@ -270,15 +295,6 @@ $.fn.bic_calendar = function(options) {
                         $('#bic_cal_' + events[i][0].replace(/\//g, "_") ).css('background', events[i][3]);
                 }
             }
-            /*
-            events.each( function(event){
-                if ( event[0].split('/')[1] == t_mes && event[0].split('/')[2] == ano ){
-                    $('#bic_cal_' + event[0].replace(/\//g, "_") ).addClass('event');
-                    $('#bic_cal_' + event[0].replace(/\//g, "_") + ' a' ).attr('href', event[2]);
-                    $('#bic_cal_' + event[0].replace(/\//g, "_") + ' a' ).attr('rel', 'tooltip');
-                    $('#bic_cal_' + event[0].replace(/\//g, "_") + ' a' ).attr('data-original-title', event[1]);
-                }
-            });*/
             
             $('.event a').tooltip();
         }

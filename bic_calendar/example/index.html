@@ -86,13 +86,19 @@
 				            [ '27/11/2012', 'Getting Contacts Barcelona', 'http://gettingcontacts.com/events/view/barcelona' ],
 					        ['', '', '']
 			        	];
+
+			        	mesos = ["Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Dicembre"];
+
+			        	dias = ["L", "M", "M", "J", "V", "S", "D"];
 			        
-				        $('#calendari_lateral').bic_calendar({
-				            events: events
+				        $('#calendari_lateral1').bic_calendar({
+				            events: events,
+				            nombresMes: mesos,
+				            dias: dias
 				        });
 				    } );
 				    </script>
-			    	<div id="calendari_lateral"></div>
+			    	<div id="calendari_lateral1"></div>
 				</div>
 			</div>
 
