@@ -16,6 +16,8 @@ $.fn.bic_calendar = function(options) {
         var capaTextoMesAnoActual = $('<div class="visualmesano"></div>');
 
         var id_calendari = "bic_cal_" + Math.floor(Math.random()*99999).toString(36);
+
+        var events = opts.events;
         
         var dias;
         if ( typeof opts.dias != "undefined" )
@@ -286,7 +288,6 @@ $.fn.bic_calendar = function(options) {
         
         function marcarEventos(mes, ano){
             var t_mes = mes + 1;
-            var events = opts.events;
             
             for(var i=0; i< events.length; i++) {
                 
