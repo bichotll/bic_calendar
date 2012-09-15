@@ -119,7 +119,7 @@ $.fn.bic_calendar = function(options) {
 				
 				
             //controles para ir al mes siguiente / anterior
-            var botonMesSiguiente = $('<div class="span3" ><a href="#" class="botonmessiguiente span4"><i class="icon-arrow-right" ></i></a></div>');
+            var botonMesSiguiente = $('<td><a href="#" class="botonmessiguiente"><i class="icon-arrow-right" ></i></a></td>');
             botonMesSiguiente.click(function(e){
                 e.preventDefault();
                 mes = (mes + 1) % 12;
@@ -127,7 +127,7 @@ $.fn.bic_calendar = function(options) {
                     ano++;
                 canvi_mes(mes, ano);
             })
-            var botonMesAnterior = $('<div class="span3" ><a href="#" class="botonmesanterior span4"><i class="icon-arrow-left" ></i></a></div>');
+            var botonMesAnterior = $('<td><a href="#" class="botonmesanterior"><i class="icon-arrow-left" ></i></a></td>');
             botonMesAnterior.click(function(e){
                 e.preventDefault();
                 mes = (mes - 1);
@@ -137,10 +137,10 @@ $.fn.bic_calendar = function(options) {
                 }	
                 canvi_mes(mes, ano);
             })
-				
+			
             //capa para mostrar el texto del mes y ano actual
-            var capaTextoMesAno = $('<div class="header row-fluid"></div>');
-            var capaTextoMesAnoControl = $('<div colspan=5 class="mesyano span6"></div>');
+            var capaTextoMesAno = $('<table class="table header"><tr></tr></table>');
+            var capaTextoMesAnoControl = $('<td colspan=5 class="mesyano span6"></td>');
             capaTextoMesAno.append(botonMesAnterior);
             capaTextoMesAno.append(capaTextoMesAnoControl);
             capaTextoMesAno.append(botonMesSiguiente);
