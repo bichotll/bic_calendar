@@ -14,7 +14,7 @@ Dependencias
 
 Use
 ---
-`
+
 	$(document).ready( function(){
 		//create a array [data, text, link, color] 
 		var events = [
@@ -26,7 +26,7 @@ Use
 			events: events
 		});
 	} );
-`
+
 
 Example
 -------
