@@ -15,7 +15,7 @@ $.fn.bic_calendar = function(options) {
         var capaDiasMes;
         var capaTextoMesAnoActual = $('<div class="visualmesano"></div>');
 
-        //var id_calendari = "#bic_calendar" + ;
+        var id_calendari = "bic_cal_" + Math.floor(Math.random()*99999).toString(36);
         
         var dias;
         if ( typeof opts.dias != "undefined" )
@@ -33,7 +33,9 @@ $.fn.bic_calendar = function(options) {
         if ( typeof opts.show_days != "undefined" )
             show_days = opts.show_days;
         else
-            show_days = true;
+            show_days = true;        
+
+
 
 
 
@@ -136,7 +138,7 @@ $.fn.bic_calendar = function(options) {
             capaTextoMesAnoControl.append(capaTextoMesAnoActual);
 				
             //calendario y el borde
-            calendario = $('<div class="bic_calendar"></div>');
+            calendario = $('<div class="bic_calendar" id="' +id_calendari +'" ></div>');
             calendario.prepend(capaTextoMesAno);
             //calendario.append(capaDiasSemana);
             //capaDiasMes.prepend(capaDiasSemana);
@@ -187,7 +189,7 @@ $.fn.bic_calendar = function(options) {
                     var codigoDia = "";
                     if (i == 0)
                         codigoDia += '<tr>';
-                    codigoDia += '<td id="bic_cal_' + contadorDias + "_" +  n_mes  + "_" + ano + '" ';
+                    codigoDia += '<td id="' + id_calendari + '_' + contadorDias + "_" +  n_mes  + "_" + ano + '" ';
                     if (i == 0)
                         codigoDia += ' class="primero"';
                     if (i == 6)
@@ -206,7 +208,7 @@ $.fn.bic_calendar = function(options) {
                 var codigoDia = "";
                 if (diaActualSemana % 7 == 1)
                     codigoDia += "<tr>";
-                codigoDia += '<td id="bic_cal_' + contadorDias + "_" + n_mes + "_" + ano + '" ';
+                codigoDia += '<td id="' + id_calendari + '_' + contadorDias + "_" +  n_mes  + "_" + ano + '" ';
                 //si estamos a principio de la semana escribo la clase primero
                 if (diaActualSemana % 7 == 1)
                     codigoDia += ' class="primero"';
@@ -280,19 +282,20 @@ $.fn.bic_calendar = function(options) {
             for(var i=0; i< events.length; i++) {
                 
                 if ( events[i][0].split('/')[1] == t_mes && events[i][0].split('/')[2] == ano ){
-                    $('#bic_cal_' + events[i][0].replace(/\//g, "_") ).addClass('event');
+
+                    $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).addClass('event');
                     
                     if ( events[i][2] == '' ){
-                        $('#bic_cal_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', 'javascript:false;');
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', 'javascript:false;');
                     } else {
-                        $('#bic_cal_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', events[i][2]);
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', events[i][2]);
                     }
 
-                    $('#bic_cal_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('rel', 'tooltip');
-                    $('#bic_cal_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('data-original-title', events[i][1]);
+                    $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('rel', 'tooltip');
+                    $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('data-original-title', events[i][1]);
                     
                     if ( events[i][3] )
-                        $('#bic_cal_' + events[i][0].replace(/\//g, "_") ).css('background', events[i][3]);
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).css('background', events[i][3]);
                 }
             }
             
