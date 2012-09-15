@@ -49,7 +49,11 @@ $.fn.bic_calendar = function(options) {
         else
             tip_orientation = 'top';
 
-
+        var req_ajax;
+        if ( typeof opts.req_ajax != "undefined" )
+            req_ajax = opts.req_ajax;
+        else
+            req_ajax = false;
 
 
 		
@@ -62,28 +66,6 @@ $.fn.bic_calendar = function(options) {
         
         
         /*** functions ***/
-
-        //funció mostra literals setmana
-        function llistar_literals_setmana(){
-            if ( show_days != false ){
-                var capaDiasSemana = $('<tr class="dias_semana" >');
-                var codigoInsertar = '';
-                $(dias).each(function(indice, valor){
-                    codigoInsertar += '<td';
-                    if (indice==0){
-                        codigoInsertar += ' class="primero"';
-                    }
-                    if (indice==6){
-                        codigoInsertar += ' class="domingo ultimo"';
-                    }
-                    codigoInsertar += ">" + valor + '</td>';
-                });
-                codigoInsertar += '</tr>';
-                capaDiasSemana.append(codigoInsertar);
-
-                capaDiasMes.append(capaDiasSemana);
-            }
-        }
         
         //funció para mostrar el calendari
         function mostrarCalendario(){
@@ -157,16 +139,41 @@ $.fn.bic_calendar = function(options) {
 				
             //inserto el calendario en el documento
             elem.append(calendario);
+
+            request_ajax(mes, ano);
             
             marcarEventos(mes, ano);
         }
 		
         function canvi_mes(mes, ano){
+            request_ajax(mes, ano);
             capaDiasMes.empty();
             llistar_literals_setmana();
             muestraDiasMes(mes, ano);
             marcarEventos(mes, ano);
         }       
+
+        //funció mostra literals setmana
+        function llistar_literals_setmana(){
+            if ( show_days != false ){
+                var capaDiasSemana = $('<tr class="dias_semana" >');
+                var codigoInsertar = '';
+                $(dias).each(function(indice, valor){
+                    codigoInsertar += '<td';
+                    if (indice==0){
+                        codigoInsertar += ' class="primero"';
+                    }
+                    if (indice==6){
+                        codigoInsertar += ' class="domingo ultimo"';
+                    }
+                    codigoInsertar += ">" + valor + '</td>';
+                });
+                codigoInsertar += '</tr>';
+                capaDiasSemana.append(codigoInsertar);
+
+                capaDiasMes.append(capaDiasSemana);
+            }
+        }
                 
         function muestraDiasMes(mes, ano){
             //console.log("muestro (mes, ano): ", mes, " ", ano)
@@ -284,6 +291,28 @@ $.fn.bic_calendar = function(options) {
             if (arrayFecha.length!=3)
                 return false;
             return checkdate(arrayFecha[1], arrayFecha[0], arrayFecha[2]);
+        }
+
+        function request_ajax(mes, ano){
+            if (req_ajax != false){
+                //peticio ajax
+                $.ajax({
+                    type: req_ajax.type,
+                    url: req_ajax.url,
+                    data: { mes: mes, ano: ano }
+                }).done(function( data ) {
+                    events = data;
+
+
+                    //events = [];
+                    //asignem els events segons la rebuda de dades...
+                    /*$.each(data, function(key, val) {
+                        events.push(data[key]);
+                    }*/
+
+                    alert(data[0]);
+                });
+            }
         }
         
         function marcarEventos(mes, ano){

@@ -152,7 +152,11 @@ $(document).ready( function(){
 				        $('#calendari_lateral1').bic_calendar({
 				            events: events,
 				            nombresMes: mesos,
-				            dias: dias
+				            dias: dias,
+				            req_ajax: {
+				            	type: 'get',
+				            	url: 'index.php'
+				            }
 				        });
 				    } );
 				    </script>
