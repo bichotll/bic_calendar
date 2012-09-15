@@ -28,7 +28,27 @@ Use
 	} );
 
 
+Options
+-------
+
+- dias
+	- default: ["l", "m", "x", "j", "v", "s", "d"]
+
+- nombresMes
+	- default: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+- show_days
+	- default: true
+
+- pop_orientation
+	- default: 'right'
+
+- tip_orientation
+	- default: 'top'
+
+
 Example
 -------
 
 [http://gettingcontacts.com](http://gettingcontacts.com)
+[http://bic.cat/bic_calendar](http://bic.cat/bic_calendar)
