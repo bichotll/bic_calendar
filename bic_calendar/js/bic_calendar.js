@@ -1,7 +1,7 @@
 /*
  *
- *
- *
+ * BIC Calendar
+ * Llicència Apache
  *
  */
 

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Bic_Calendar example</title>
+
+        <!-- Long live the font Ubuntu ! -->
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500,700' rel='stylesheet' type='text/css'>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+
+        <script src="lib/js/bootstrap.min.js"></script>
+        <link href="lib/css/bootstrap.min.css" rel="stylesheet">
+        <link href="lib/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+        <script src="../js/bic_calendar.js"></script>
+        <link href="../css/bic_calendar.css" rel="stylesheet">
+
+        <style>
+        body{
+        	background: #f0f0f0;
+        	padding-top: 20px;
+        }
+        body, div, span, p, a, h1, h2, h3, h4, h5, h6{
+        	font-family: 'Ubuntu', sans-serif;
+        }
+        footer{
+        	padding-top: 100px;
+        }
+        .pintam{
+        	box-shadow: rgba(0,0,0,0.3) 0 1px 3px;
+        	background: #f7f7f7;
+        	border-radius: 5px;
+        }
+        .atzucac{
+        	padding: 20px;
+        }
+        .container{
+        	max-width: 900px;
+        }
+        </style>
+    </head>
+    <body>
+    	<div class="container">
+			<div class="hero-unit">
+				<h1>BIC Calendar</h1>
+				<p>A simple twitter bootstrap calendar / agenda to mark events</p>
+			</div>
+
+			<div class="row-fluid" >
+				<div class="span8 pintam" >
+					<div class="atzucac" >
+						<h2>Simple use!</h2>
+						<p></p>
+					</div>
+				</div>
+				<div class="span4" >
+				    <script>
+			        $(document).ready( function(){
+			        
+			            var events = [
+					        [ '30/11/-0001', 'SANT CUGAT ', '', '#999' ],
+				            [ '21/1/2010', 'SENTMENAT', '', '#999' ],
+				            [ '24/2/2010', 'MADRID', '', '#999'],
+				            [ '4/5/2010', 'GRANOLLERS - VALL', '', '#999' ],
+				            [ '6/5/2010', 'TERRASSA - VALL', '', '#999' ],
+				            [ '12/5/2010', 'ARGENTONA', '', '#999' ],
+				            [ '23/5/2012', 'SANTA COLOMA DE GRAMENET  - Barcelonès Nord', 'http://gettingcontacts.com/events/view/gramanet', '#999' ],
+				            [ '24/5/2012', 'SECTOR METAL', 'http://gettingcontacts.com/events/view/sector_metall', '#999' ],
+				            [ '6/6/2012', 'ProCatTIC 2012', 'http://gettingcontacts.com/events/view/procattic2012', '#999' ],
+				            [ '7/6/2012', 'GETTING CONTACTS EXPORT ', 'http://gettingcontacts.com/events/view/export_terrassa', '#999' ],
+				            [ '19/6/2012', 'SANTIAGO DE COMPOSTELA - GALICIA', 'http://gettingcontacts.com/events/view/santiagocompostela_galicia', '#999' ],
+				            [ '26/9/2012', '4ª Edición Getting Contacts Barberà', 'http://gettingcontacts.com/events/view/barbera4' ],
+				            [ '5/10/2012', 'Fem Empresa - Palma de Mallorca', 'http://gettingcontacts.com/events/view/palma_de_mallorca_fem_empresa' ],
+				            [ '8/10/2012', '1era edición: Getting Contacts Palma de Mallorca', 'http://gettingcontacts.com/events/view/palma_de_mallorca' ],
+				            [ '8/10/2012', 'Getting Contacts Terrassa', 'http://gettingcontacts.com/events/view/terrassa' ],
+				            [ '11/10/2012', 'A Coruña', 'http://gettingcontacts.com/events/view/a_coruna' ],
+				            [ '19/10/2012', 'MATARÓ TECNOCAMPUS', 'http://gettingcontacts.com/events/view/tecnocampus4' ],
+					        [ '24/10/2012', 'Getting Contacts Montcada', 'http://gettingcontacts.com/events/view/montcada4' ],
+				            [ '8/11/2012', 'EXPORT Getting Contacts Cornellà', 'http://gettingcontacts.com/events/view/cornella_export' ],
+				            [ '14/11/2012', '1era edición: Getting Contacts Alcobendas Madrid', 'http://gettingcontacts.com/events/view/madrid' ],
+				            [ '14/11/2012', 'UAB NEM “Networking, Exhibition & Meetings”', 'http://gettingcontacts.com/events/view/innovationforum'],
+				            [ '16/11/2012', 'SANTIAGO DE COMPOSTELA - GALICIA ', 'http://gettingcontacts.com/events/view/santiago_de_compostela' ],
+				            [ '20/11/2012', '2º Getting Contacts Alaquás - Aldaia', 'http://gettingcontacts.com/events/view/alaquas_aldaia' ],
+				            [ '21/11/2012', 'HABITAT Clúster Habitat', 'http://gettingcontacts.com/events/view/habitat' ],
+				            [ '27/11/2012', 'Getting Contacts Barcelona', 'http://gettingcontacts.com/events/view/barcelona' ],
+					        ['', '', '']
+			        	];
+			        
+				        $('#calendari_lateral').bic_calendar({
+				            events: events
+				        });
+				    } );
+				    </script>
+			    	<div id="calendari_lateral"></div>
+				</div>
+			</div>
+
+			<footer>
+				<p>
+					<a href="http://bic.cat" >bic.cat</a>
+				</p>
+			</footer>
+		</div>
+    </body>
+</html>
