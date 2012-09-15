@@ -35,6 +35,18 @@ $.fn.bic_calendar = function(options) {
         else
             show_days = true;
 
+        var pop_orientation;
+        if ( typeof opts.pop_orientation != "undefined" )
+            pop_orientation = opts.pop_orientation;
+        else
+            pop_orientation = 'top';
+
+        var tip_orientation;
+        if ( typeof opts.tip_orientation != "undefined" )
+            tip_orientation = opts.tip_orientation;
+        else
+            tip_orientation = 'top';
+
 
 
 
@@ -308,8 +320,12 @@ $.fn.bic_calendar = function(options) {
                 }
             }
             
-            $('#' + id_calendari + ' ' + '.event_tooltip a').tooltip();
-            $('#' + id_calendari + ' ' + '.event_popover a').popover();
+            $('#' + id_calendari + ' ' + '.event_tooltip a').tooltip({
+                placement: tip_orientation
+            });
+            $('#' + id_calendari + ' ' + '.event_popover a').popover({
+                placement: pop_orientation
+            });
         }
         
     /*** --functions-- ***/
