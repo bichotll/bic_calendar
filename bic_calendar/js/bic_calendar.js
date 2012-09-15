@@ -33,10 +33,7 @@ $.fn.bic_calendar = function(options) {
         if ( typeof opts.show_days != "undefined" )
             show_days = opts.show_days;
         else
-            show_days = true;        
-
-
-
+            show_days = true;
 
 
 
@@ -285,21 +282,34 @@ $.fn.bic_calendar = function(options) {
 
                     $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).addClass('event');
                     
+                    $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('data-original-title', events[i][1]);
+                    
+                    //bg
+                    if ( events[i][3] )
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).css('background', events[i][3]);
+                    
+                    //link
                     if ( events[i][2] == '' ){
                         $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', 'javascript:false;');
                     } else {
                         $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', events[i][2]);
                     }
 
-                    $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('rel', 'tooltip');
-                    $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('data-original-title', events[i][1]);
-                    
-                    if ( events[i][3] )
-                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).css('background', events[i][3]);
+
+                    //tooltip vs popover
+                    if ( events[i][4] ){
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).addClass('event_popover');
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('rel', 'popover');
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('data-content', events[i][4]);
+                    } else {
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).addClass('event_tooltip');
+                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('rel', 'tooltip');
+                    }
                 }
             }
             
-            $('.event a').tooltip();
+            $('#' + id_calendari + ' ' + '.event_tooltip a').tooltip();
+            $('#' + id_calendari + ' ' + '.event_popover a').popover();
         }
         
     /*** --functions-- ***/
