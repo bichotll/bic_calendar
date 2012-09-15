@@ -3,6 +3,10 @@
     border-radius: 5px;
     border: 1px solid #DDD;
 }
+.bic_calendar a{
+    text-decoration: none;
+    color: #333;
+}
 .bic_calendar td{
     text-align: center;
 }
@@ -17,6 +21,10 @@
 }
 .bic_calendar .mesyano{
     text-align: center;
+    font-weight: 500;
+}
+.bic_calendar .dias_semana{
+    font-weight: 500;
 }
 .bic_calendar .event{
     color: white;
