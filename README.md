@@ -31,20 +31,22 @@ Use
 Options
 -------
 
-- dias
+- dias (array)
 	- default: ["l", "m", "x", "j", "v", "s", "d"]
 
-- nombresMes
+- nombresMes (array)
 	- default: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
-- show_days
+- show_days (boolean)
 	- default: true
 
-- pop_orientation
-	- default: 'right'
+- popover_options (`popover Twitter Bootstrap<http://twitter.github.com/bootstrap/javascript.html#popovers>`_ object)
 
-- tip_orientation
-	- default: 'top'
+- tooltip_options (`tooltip Twitter Bootstrap<http://twitter.github.com/bootstrap/javascript.html#tooltips>`_ object)
+
+- req_ajax (object)
+	- req_ajax.type (string) {'get', 'post'}
+	- req_ajax.url (string)
 
 
 Example
