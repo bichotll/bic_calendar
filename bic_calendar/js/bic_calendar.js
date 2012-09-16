@@ -37,17 +37,17 @@ $.fn.bic_calendar = function(options) {
         else
             show_days = true;
 
-        var pop_orientation;
-        if ( typeof opts.pop_orientation != "undefined" )
-            pop_orientation = opts.pop_orientation;
+        var popover_options;
+        if ( typeof opts.popover_options != "undefined" )
+            popover_options = opts.popover_options;
         else
-            pop_orientation = 'top';
+            popover_options = {placement: 'top'};
 
-        var tip_orientation;
-        if ( typeof opts.tip_orientation != "undefined" )
-            tip_orientation = opts.tip_orientation;
+        var tooltip_options;
+        if ( typeof opts.tooltip_options != "undefined" )
+            tooltip_options = opts.tooltip_options;
         else
-            tip_orientation = 'top';
+            tooltip_options = {placement: 'top'};
 
         var req_ajax;
         if ( typeof opts.req_ajax != "undefined" )
@@ -349,12 +349,8 @@ $.fn.bic_calendar = function(options) {
                 }
             }
             
-            $('#' + id_calendari + ' ' + '.event_tooltip a').tooltip({
-                placement: tip_orientation
-            });
-            $('#' + id_calendari + ' ' + '.event_popover a').popover({
-                placement: pop_orientation
-            });
+            $('#' + id_calendari + ' ' + '.event_tooltip a').tooltip(tooltip_options);
+            $('#' + id_calendari + ' ' + '.event_popover a').popover(popover_options);
         }
         
     /*** --functions-- ***/
