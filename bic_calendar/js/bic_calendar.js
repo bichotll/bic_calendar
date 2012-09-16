@@ -139,18 +139,15 @@ $.fn.bic_calendar = function(options) {
 				
             //inserto el calendario en el documento
             elem.append(calendario);
-
-            request_ajax(mes, ano);
             
-            marcarEventos(mes, ano);
+            check_events(mes, ano);
         }
 		
         function canvi_mes(mes, ano){
-            request_ajax(mes, ano);
             capaDiasMes.empty();
             llistar_literals_setmana();
             muestraDiasMes(mes, ano);
-            marcarEventos(mes, ano);
+            check_events(mes, ano);
         }       
 
         //funció mostra literals setmana
@@ -293,25 +290,27 @@ $.fn.bic_calendar = function(options) {
             return checkdate(arrayFecha[1], arrayFecha[0], arrayFecha[2]);
         }
 
-        function request_ajax(mes, ano){
+        function check_events(mes, ano){
             if (req_ajax != false){
                 //peticio ajax
                 $.ajax({
                     type: req_ajax.type,
                     url: req_ajax.url,
-                    data: { mes: mes, ano: ano }
+                    data: { mes: mes + 1, ano: ano },
+                    dataType: 'json'
                 }).done(function( data ) {
-                    events = data;
 
+                    events = [];
 
-                    //events = [];
-                    //asignem els events segons la rebuda de dades...
-                    /*$.each(data, function(key, val) {
-                        events.push(data[key]);
-                    }*/
+                    $.each(data, function(k,v){
+                        events.push(data[k]);
+                    });
 
-                    alert(data[0]);
+                    marcarEventos(mes, ano);
+
                 });
+            } else {
+                marcarEventos(mes, ano);
             }
         }
         
