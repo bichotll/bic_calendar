@@ -330,8 +330,13 @@ $.fn.bic_calendar = function(options) {
                         $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") ).css('background', events[i][3]);
                     
                     //link
-                    if ( events[i][2] == '' ){
-                        $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', 'javascript:false;');
+                    if ( events[i][2] == '' || events[i][2] == '#' ){
+                        if ( events[i][4] != '' ){
+                            $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('data-trigger', 'manual');
+                            $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).addClass('manual_popover');
+                        } else {
+                            $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', 'javascript:false;');
+                        }
                     } else {
                         $('#' + id_calendari + '_' + events[i][0].replace(/\//g, "_") + ' a' ).attr('href', events[i][2]);
                     }
@@ -351,6 +356,10 @@ $.fn.bic_calendar = function(options) {
             
             $('#' + id_calendari + ' ' + '.event_tooltip a').tooltip(tooltip_options);
             $('#' + id_calendari + ' ' + '.event_popover a').popover(popover_options);
+
+            $('.manual_popover').click( function(){
+                $(this).popover('toggle');
+            } );
         }
         
     /*** --functions-- ***/
