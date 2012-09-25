@@ -70,29 +70,15 @@
 
 						<hr>
 
-						<h3>Use</h3>
-
-						<pre>
-$(document).ready( function(){
-	//create a array [data, text, link, color] 
-	var events = [
-		[ '21/1/2010', 'SENTMENAT', '', '#999' ],
-		[ '23/5/2012', 'SANTA COLOMA DE GRAMENET  - Barcelonès Nord', 'http://ca.gettingcontacts.com/events/view/gramanet', '#999' ]
-	];
-	//create the calendar
-	$('#calendari_lateral').bic_calendar({
-		events: events
-	});
-} );
-						</pre>
-
-						<hr>
-
 						<h3>Options<h3>
 
 						<h5></h5>
 
 						<dl>
+							<dt>popover_options (<a href="http://twitter.github.com/bootstrap/javascript.html#popovers" target="_blank" >popover Twitter Bootstrap</a> object)</dt>
+
+							<dt>tooltip_options (<a href="http://twitter.github.com/bootstrap/javascript.html#tooltips" target="_blank" >tooltip Twitter Bootstrap</a> object)</dt>
+
 							<dt>dias (array)</dt>
 							<dd>default: default: ["l", "m", "x", "j", "v", "s", "d"]</dd>
 
@@ -102,22 +88,94 @@ $(document).ready( function(){
 							<dt>show_days (boolean)</dt>
 							<dd>default: true</dd>
 
-							<dt>popover_options (<a href="http://twitter.github.com/bootstrap/javascript.html#popovers" target="_blank" >popover Twitter Bootstrap</a> object)</dt>
-
-							<dt>tooltip_options (<a href="http://twitter.github.com/bootstrap/javascript.html#tooltips" target="_blank" >tooltip Twitter Bootstrap</a> object)</dt>
-
-							<dt>req_ajax (object)</dt>
+							<dt>req_ajax (json array of event array)</dt>
 							<dd>
 								- req_ajax.type (string) {'get', 'post'}<br>
 								- req_ajax.url (string)
 							</dd>
+
+							<dt>events (array of event array)</dt>
+							<dd>
+								- req_ajax.type (string) {'get', 'post'}<br>
+								- req_ajax.url (string)
+							</dd>
+
+							<br>
+
+							<dt>Event (array)</dt>
+							<dd>
+								<b>- [0]</b> (string): date<br>
+								ex: "17/8/1989"
+							</dd>
+							<dd>
+								<b>- [1]</b> (string): title<br>
+								ex: "Event Barberà"
+							</dd>
+							<dd>
+								<b>- [2]</b> (string): link<br>
+								ex: "http://google.es"
+							</dd>
+							<dd>
+								<b>- [3]</b> (string): color<br>
+								ex: "#333"
+							</dd>
+							<dd>
+								<b>- [4]</b> (string): html popover<br>
+								ex: "Text for the content of popover...description of event...image..."
+							</dd>
 						</dl>
+
+						<hr>
+
+						<h3>Use example</h3>
+
+						<p>Note that each event of the exemple have a diferent behavior<br>
+							 - The blue event have a hover popover<br>
+							 <code>["27/$mes/$ano", 'Getting Contacts Barcelona', 'http://gettingcontacts.com/events/view/barcelona', 'red']</code><br>
+							 - The green event have a click popover<br>
+							 <code>["7/$mes/$ano", '2º Getting Contacts Alaquás', 'http://gettingcontacts.com/events/view/alaquas', 'blue', 'contingut popover<image! src="http://gettingcontacts.com/upload/news/estiu_productiu.png" >']</code><br>
+							 - The red event have a hover tooltip
+							 <code>["17/$mes/$ano", '4º Getting Contacts Barberà', '#', '#3B4', 'contingut popover<image! src="http://gettingcontacts.com/upload/news/estiu_productiu.png" >']</code>
+						</p>
+
+						<h5>Html:</h5>
+						<pre>
+$(document).ready( function(){
+
+	mesos = ["Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Dicembre"];
+
+	dias = ["L", "M", "M", "J", "V", "S", "D"];
+
+    $('#calendari_lateral1').bic_calendar({
+        nombresMes: mesos,
+        dias: dias,
+        req_ajax: {
+        	type: 'get',
+        	url: 'index.php'
+        }
+    });
+} );
+						</pre>
+						<br>
+						<h5>PHP:</h5>
+						<pre>
+$mes = $_GET['mes'];
+$ano = $_GET['ano'];
+
+$array = array(
+	array("27/$mes/$ano", 'Getting Contacts Barcelona', 'http://gettingcontacts.com/events/view/barcelona'),
+	array("7/$mes/$ano", '2º Getting Contacts Alaquás', 'http://gettingcontacts.com/events/view/alaquas', '#3B4', 'contingut popover<image! src="http://gettingcontacts.com/upload/news/estiu_productiu.png" >'),
+	array("17/$mes/$ano", '4º Getting Contacts Barberà', '#', '#3B4', 'contingut popover<image! src="http://gettingcontacts.com/upload/news/estiu_productiu.png" >')
+);
+
+echo json_encode($array);
+						</pre>
 
 
 						<hr>
 
 
-						<h3>Example</h3>
+						<h3>Showcase</h3>
 
 						<a href="http://gettingcontacts.com" target="_blank" >http://gettingcontacts.com</a>
 						<br>
@@ -130,41 +188,12 @@ $(document).ready( function(){
 				<div class="span4" >
 				    <script>
 			        $(document).ready( function(){
-			        
-			            var events = [
-				            [ '21/1/2011', 'SENTMENAT', '', '#999' ],
-				            [ '24/2/2011', 'MADRID', '', '#999'],
-				            [ '4/5/2011', 'GRANOLLERS - VALL', '', '#999' ],
-				            [ '6/5/2011', 'TERRASSA - VALL', '', '#999' ],
-				            [ '12/5/2011', 'ARGENTONA', '', '#999' ],
-				            [ '23/5/2012', 'SANTA COLOMA DE GRAMENET  - Barcelonès Nord', 'http://gettingcontacts.com/events/view/gramanet', '#999' ],
-				            [ '24/5/2012', 'SECTOR METAL', 'http://gettingcontacts.com/events/view/sector_metall', '#999' ],
-				            [ '6/6/2012', 'ProCatTIC 2012', 'http://gettingcontacts.com/events/view/procattic2012', '#999' ],
-				            [ '7/6/2012', 'GETTING CONTACTS EXPORT ', 'http://gettingcontacts.com/events/view/export_terrassa', '#999' ],
-				            [ '19/6/2012', 'SANTIAGO DE COMPOSTELA - GALICIA', 'http://gettingcontacts.com/events/view/santiagocompostela_galicia', '#999' ],
-				            [ '26/9/2012', '4ª Edición Getting Contacts Barberà', 'http://gettingcontacts.com/events/view/barbera4', '', 'test de test<br><b>fdsa</b><br><img src="http://gettingcontacts.com/upload/jornadas/palma_de_mallorca_portada.jpg" >' ],
-				            [ '5/10/2012', 'Fem Empresa - Palma de Mallorca', 'http://gettingcontacts.com/events/view/palma_de_mallorca_fem_empresa' ],
-				            [ '8/10/2012', '1era edición: Getting Contacts Palma de Mallorca', 'http://gettingcontacts.com/events/view/palma_de_mallorca' ],
-				            [ '8/10/2012', 'Getting Contacts Terrassa', 'http://gettingcontacts.com/events/view/terrassa' ],
-				            [ '11/10/2012', 'A Coruña', 'http://gettingcontacts.com/events/view/a_coruna' ],
-				            [ '19/10/2012', 'MATARÓ TECNOCAMPUS', 'http://gettingcontacts.com/events/view/tecnocampus4' ],
-					        [ '24/10/2012', 'Getting Contacts Montcada', 'http://gettingcontacts.com/events/view/montcada4' ],
-				            [ '8/11/2012', 'EXPORT Getting Contacts Cornellà', 'http://gettingcontacts.com/events/view/cornella_export' ],
-				            [ '14/11/2012', '1era edición: Getting Contacts Alcobendas Madrid', 'http://gettingcontacts.com/events/view/madrid' ],
-				            [ '14/11/2012', 'UAB NEM “Networking, Exhibition & Meetings”', 'http://gettingcontacts.com/events/view/innovationforum'],
-				            [ '16/11/2012', 'SANTIAGO DE COMPOSTELA - GALICIA ', 'http://gettingcontacts.com/events/view/santiago_de_compostela' ],
-				            [ '20/11/2012', '2º Getting Contacts Alaquás - Aldaia', 'http://gettingcontacts.com/events/view/alaquas_aldaia' ],
-				            [ '21/11/2012', 'HABITAT Clúster Habitat', 'http://gettingcontacts.com/events/view/habitat' ],
-				            [ '27/11/2012', 'Getting Contacts Barcelona', 'http://gettingcontacts.com/events/view/barcelona' ],
-					        ['', '', '']
-			        	];
 
 			        	mesos = ["Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Dicembre"];
 
 			        	dias = ["L", "M", "M", "J", "V", "S", "D"];
 			        
 				        $('#calendari_lateral1').bic_calendar({
-				            events: events,
 				            nombresMes: mesos,
 				            dias: dias,
 				            req_ajax: {
