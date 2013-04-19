@@ -10,7 +10,7 @@
     "html5",
     "mobile"
   ],
-  "version": "2.0.6",
+  "version": "2.0.8",
   "author": {
     "name": "bichotll",
     "url": "http://bic.cat"
@@ -23,7 +23,7 @@
   ],
   "bugs": "https://github.com/bichotll/bic_calendar/issues",
   "homepage": "http://bichotll.github.io/bic_calendar",
-  "download": "http://mobiscroll.com/component/select",
+  "download": "https://github.com/bichotll/bic_calendar",
   "dependencies": {
     "jquery": ">=1.7.2",
     "twitter bootstrap": ">=2"
