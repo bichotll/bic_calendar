@@ -1,6 +1,9 @@
 /*
  *
- * BIC Calendar
+ * bic calendar
+ * Autor: bichotll
+ * Web-autor: bic.cat
+ * Web script: http://bichotll.github.io/bic_calendar/
  * Llicència Apache
  *
  */
