@@ -1,0 +1,35 @@
+{
+  "name": "bic_calendar",
+  "title": "Bic Calendar",
+  "description": "A simple twitter bootstrap calendar / agenda to mark events",
+  "keywords": [
+    "ui",
+    "input",
+    "form",
+    "html5",
+    "select",
+    "touchscreen",
+    "dropdown",
+    "mobile",
+    "scroller",
+    "clickpick"
+  ],
+  "version": "1",
+  "author": {
+    "name": "bichotll",
+    "url": "http://bic.cat"
+  },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "https://github.com/bichotll/bic_calendar/blob/master/LICENSE"
+    }
+  ],
+  "bugs": "https://github.com/bichotll/bic_calendar/issues",
+  "homepage": "http://bichotll.github.io/bic_calendar",
+  "download": "http://mobiscroll.com/component/select",
+  "dependencies": {
+    "jquery": ">=1.7.2",
+    "twitter bootstrap": ">=2",
+  }
+}
