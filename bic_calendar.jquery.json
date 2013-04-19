@@ -8,10 +8,9 @@
     "events",
     "agenda",
     "html5",
-    "twitter bootstrap",
     "mobile"
   ],
-  "version": "1",
+  "version": "1.0.0",
   "author": {
     "name": "bichotll",
     "url": "http://bic.cat"
