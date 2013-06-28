@@ -189,7 +189,15 @@ $.fn.bic_calendar = function(options) {
             var ultimoDiaMes = ultimoDia(mes,ano);
             
             var n_mes = mes + 1;
+
+            if (n_mes.toString().length == 1) {
+                n_mes = "0"+n_mes;
+            }            
             
+            if (contadorDias.toString().length == 1) {
+                contadorDias = "0"+contadorDias;
+            }
+
             var capaDiasMes_string = "";
 			
             //escribo la primera fila de la semana
