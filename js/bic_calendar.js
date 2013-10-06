@@ -76,10 +76,17 @@ $.fn.bic_calendar = function(options) {
         if (typeof opts.multiSelect != 'undefined')
             multiSelect = opts.multiSelect;
 
-        var displayHeader = true;
-        if (typeof opts.displayHeader != 'undefined')
-            displayHeader = opts.displayHeader;
+        var displayMonthController = true;
+        if (typeof opts.displayMonthController != 'undefined')
+            displayMonthController = opts.displayMonthController;
 
+        var displayYearController = true;
+        if (typeof opts.displayYearController != 'undefined')
+            displayYearController = opts.displayYearController;
+        
+        var firstDaySelected = '';
+        var lastDaySelected = '';
+        
         /*** --vars-- ***/
 
 
@@ -168,7 +175,7 @@ $.fn.bic_calendar = function(options) {
             headerLayer.append(monthTextLayer);
             
             //calendar n border
-            calendar = $('<div class="bic_calendar" id="' + calendarId + '" ></div>');
+            calendar = $('<div class="bic_calendar row" id="' + calendarId + '" ></div>');
             calendar.prepend(headerLayer);
             //calendar.append(capaDiasSemana);
             //daysMonthLayer.prepend(capaDiasSemana);
@@ -430,6 +437,7 @@ $.fn.bic_calendar = function(options) {
         /**
          * check if the user can mark days
          */
+        var daySelected = false;
         function checkIfEnableMark() {
             if (enableSelect == true) {
 
@@ -438,20 +446,17 @@ $.fn.bic_calendar = function(options) {
                 elem.on('click', 'td', function() {
                     //if multiSelect
                     if (multiSelect == true) {
-                        if (elem.find('.selection').length == 0) {
+                        if (daySelected == false) {
                             //add class selection
                             $(this).find('div').addClass('selection');
-                            //create n fire event
-                            var eventBicCalendarSelect = new CustomEvent("bicCalendarSelect", {
-                                detail: {
-                                    date: $(this).data('date')
-                                }
-                            });
-                            document.dispatchEvent(eventBicCalendarSelect);
+                            daySelected = true;
                         } else {
-                            if (elem.find('td div.first-selection').length == 0) {
+                            if (firstDaySelected == '') {
                                 var oldSelected = elem.find('.selection');
                                 var newSelected = $(this).find('div');
+                                
+                                //set firstDaySelected
+                                firstDaySelected = oldSelected.parent().data('date');
 
                                 //remove all selected classes
                                 elem.find('td.selection').removeClass('middle-selection selection first-selection last-selection');
@@ -484,12 +489,15 @@ $.fn.bic_calendar = function(options) {
                                 //create n fire event
                                 var eventBicCalendarSelect = new CustomEvent("bicCalendarSelect", {
                                     detail: {
-                                        dateFirst: elem.find('.first-selection').parent().data('date'),
+                                        dateFirst: firstDaySelected,
                                         dateLast: elem.find('.last-selection').parent().data('date'),
                                     }
                                 });
                                 document.dispatchEvent(eventBicCalendarSelect);
                             } else {
+                                firstDaySelected = '';
+                                lastDaySelected = '';
+                                daySelected = false;
                                 elem.find('.selection').removeClass('middle-selection selection first-selection last-selection');
                             }
                         }
