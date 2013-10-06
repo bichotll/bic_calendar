@@ -39,6 +39,11 @@
                 background: #f7f7f7;
                 border-radius: 5px;
             }
+            .jumbotron{
+                box-shadow: 0 0 10px #ccc;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
             .atzucac{
                 padding: 20px;
             }
@@ -64,17 +69,20 @@
 
                             var events = [
                                 {
-                                    date: "28/11/2013",
+                                    date: "28/10/2013",
                                     title: 'SPORT & WELLNESS',
                                     link: '',
                                     color: '',
-                                    content: '<a href="http://sport-wellness.gettingcontacts.com/es/" ><img src="http://gettingcontacts.com/upload/jornadas/sport-wellness_portada.png" ><br>06-11-2013 - 09:00 <br> Tecnocampus Mataró Auditori</a>',
-                                    class: ''
+                                    content: '<img src="http://gettingcontacts.com/upload/jornadas/sport-wellness_portada.png" ><br>06-11-2013 - 09:00 <br> Tecnocampus Mataró Auditori',
+                                    class: '',
+                                    displayHeader: true
                                 }
                             ];
 
                             $('#calendari_lateral1').bic_calendar({
-                                events: events
+                                events: events,
+                                enableSelect: true,
+                                multiSelect: true
                             });
                         });
                     </script>

@@ -12,13 +12,23 @@ $.fn.bic_calendar = function(options) {
 
     var opts = $.extend({}, $.fn.bic_calendar.defaults, options);
 
+
+
     this.each(function() {
+
+
+        /*** vars ***/
+
+
+        //element called
+        var elem = $(this);
 
         var calendar;
         var daysMonthLayer;
-        var textMonthYearCurrentLayer = $('<div class="visualmonthyear"></div>');
+        var textMonthCurrentLayer = $('<div class="visualmonth"></div>');
+        var textYearCurrentLayer = $('<div class="visualyear"></div>');
 
-        var calendarId = "bic_cal_" + Math.floor(Math.random() * 99999).toString(36);
+        var calendarId = "bic_calendar";
 
         var events = opts.events;
 
@@ -44,13 +54,13 @@ $.fn.bic_calendar = function(options) {
         if (typeof opts.popoverOptions != "undefined")
             popoverOptions = opts.popoverOptions;
         else
-            popoverOptions = {placement: 'top'};
+            popoverOptions = {placement: 'bottom', html: true, trigger: 'hover'};
 
         var tooltipOptions;
         if (typeof opts.tooltipOptions != "undefined")
             tooltipOptions = opts.tooltipOptions;
         else
-            tooltipOptions = {placement: 'top'};
+            tooltipOptions = {placement: 'bottom', trigger: 'hover'};
 
         var reqAjax;
         if (typeof opts.reqAjax != "undefined")
@@ -58,20 +68,28 @@ $.fn.bic_calendar = function(options) {
         else
             reqAjax = false;
 
+        var enableSelect = false;
+        if (typeof opts.enableSelect != 'undefined')
+            enableSelect = opts.enableSelect;
+
+        var multiSelect = false;
+        if (typeof opts.multiSelect != 'undefined')
+            multiSelect = opts.multiSelect;
+
+        var displayHeader = true;
+        if (typeof opts.displayHeader != 'undefined')
+            displayHeader = opts.displayHeader;
+
+        /*** --vars-- ***/
 
 
-        //element called
-        var elem = $(this);
-
-
-        showCalendar();
 
 
 
         /*** functions ***/
 
         /**
-         * print calendar
+         * init n print calendar
          */
         function showCalendar() {
 
@@ -82,23 +100,6 @@ $.fn.bic_calendar = function(options) {
 
             //Date obj to calc the day
             var objFecha = new Date();
-            //check if input has a date writed down
-            var textoFechaEscrita = elem.val();
-            if (textoFechaEscrita != "") {
-                if (validateWritedDate(textoFechaEscrita)) {
-                    var arrayFechaEscrita = textoFechaEscrita.split("/");
-                    //check if year has two digits
-                    if (arrayFechaEscrita[2].length == 2) {
-                        if (arrayFechaEscrita[2].charAt(0) == "0") {
-                            arrayFechaEscrita[2] = arrayFechaEscrita[2].substring(1);
-                        }
-                        arrayFechaEscrita[2] = parseInt(arrayFechaEscrita[2]);
-                        if (arrayFechaEscrita[2] < 50)
-                            arrayFechaEscrita[2] += 2000;
-                    }
-                    objFecha = new Date(arrayFechaEscrita[2], arrayFechaEscrita[1] - 1, arrayFechaEscrita[0])
-                }
-            }
 
             //current year n current month
             var month = objFecha.getMonth();
@@ -109,14 +110,16 @@ $.fn.bic_calendar = function(options) {
 
             //next-previous month controllers
             var nextMonthButton = $('<td><a href="#" class="button-month-next"><i class="glyphicon glyphicon-arrow-right" ></i></a></td>');
+            //event
             nextMonthButton.click(function(e) {
                 e.preventDefault();
                 month = (month + 1) % 12;
                 if (month == 0)
                     year++;
-                changeMonth(month, year);
+                changeDate(month, year);
             })
             var previousMonthButton = $('<td><a href="#" class="button-month-previous"><i class="glyphicon glyphicon-arrow-left" ></i></a></td>');
+            //event
             previousMonthButton.click(function(e) {
                 e.preventDefault();
                 month = (month - 1);
@@ -124,20 +127,49 @@ $.fn.bic_calendar = function(options) {
                     year--;
                     month = 11;
                 }
-                changeMonth(month, year);
+                changeDate(month, year);
             })
 
-            //show the current year n current month text layer
-            var capaTextoMesAno = $('<table class="table header"><tr></tr></table>');
-            var yearMonthControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
-            capaTextoMesAno.append(previousMonthButton);
-            capaTextoMesAno.append(yearMonthControlTextLayer);
-            capaTextoMesAno.append(nextMonthButton);
-            yearMonthControlTextLayer.append(textMonthYearCurrentLayer);
+            //next-previous year controllers
+            var nextYearButton = $('<td><a href="#" class="button-year-next"><i class="glyphicon glyphicon-arrow-right" ></i></a></td>');
+            //event
+            nextYearButton.click(function(e) {
+                e.preventDefault();
+                year++;
+                changeDate(month, year);
+            })
+            var previousYearButton = $('<td><a href="#" class="button-year-previous"><i class="glyphicon glyphicon-arrow-left" ></i></a></td>');
+            //event
+            previousYearButton.click(function(e) {
+                e.preventDefault();
+                year--;
+                changeDate(month, year);
+            })
 
+
+            //show the current year n current month text layer
+            var headerLayer = $('<table class="table header"></table>');
+            var monthTextLayer = $('<tr></tr>');
+            var yearTextLayer = $('<tr></tr>');
+            var monthControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
+            var yearControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
+            
+            yearTextLayer.append(previousYearButton);
+            yearTextLayer.append(yearControlTextLayer);
+            yearTextLayer.append(nextYearButton);
+            yearControlTextLayer.append(textYearCurrentLayer);
+            
+            monthTextLayer.append(previousMonthButton);
+            monthTextLayer.append(monthControlTextLayer);
+            monthTextLayer.append(nextMonthButton);
+            monthControlTextLayer.append(textMonthCurrentLayer);
+
+            headerLayer.append(yearTextLayer);
+            headerLayer.append(monthTextLayer);
+            
             //calendar n border
             calendar = $('<div class="bic_calendar" id="' + calendarId + '" ></div>');
-            calendar.prepend(capaTextoMesAno);
+            calendar.prepend(headerLayer);
             //calendar.append(capaDiasSemana);
             //daysMonthLayer.prepend(capaDiasSemana);
             calendar.append(daysMonthLayer);
@@ -145,10 +177,17 @@ $.fn.bic_calendar = function(options) {
             //insert calendar in the document
             elem.append(calendar);
 
+            //check and add events
             checkEvents(month, year);
+
+            //if enable select
+            checkIfEnableMark();
         }
 
-        function changeMonth(month, year) {
+        /**
+         * indeed, change month or year
+         */
+        function changeDate(month, year) {
             daysMonthLayer.empty();
             listListeralsWeek();
             showMonthDays(month, year);
@@ -184,8 +223,9 @@ $.fn.bic_calendar = function(options) {
          */
         function showMonthDays(month, year) {
 
-            //show in textMonthYearCurrentLayer the month and the year that it will print
-            textMonthYearCurrentLayer.text(monthName[month] + " " + year);
+            //print year n month in layers
+            textMonthCurrentLayer.text(monthName[month]);
+            textYearCurrentLayer.text(year);
 
             //show days of the month
             var daysCounter = 1;
@@ -215,12 +255,12 @@ $.fn.bic_calendar = function(options) {
                     var dayCode = "";
                     if (i == 0)
                         dayCode += '<tr>';
-                    dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" ';
+                    dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
                     if (i == 0)
                         dayCode += ' class="primero"';
                     if (i == 6)
                         dayCode += ' class="ultimo domingo"';
-                    dayCode += '><a>' + daysCounter + '</a></span>';
+                    dayCode += '><div><a>' + daysCounter + '</a></div></span>';
                     if (i == 6)
                         dayCode += '</tr>';
                     daysCounter++;
@@ -234,14 +274,14 @@ $.fn.bic_calendar = function(options) {
                 var dayCode = "";
                 if (currentWeekDay % 7 == 1)
                     dayCode += "<tr>";
-                dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" ';
+                dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
                 //if we are in the beginning of the week it add class first
                 if (currentWeekDay % 7 == 1)
                     dayCode += ' class="first"';
                 //if we are in the end and it's sunday last
                 if (currentWeekDay % 7 == 0)
                     dayCode += ' class="sunday last"';
-                dayCode += '><a>' + daysCounter + '</a></td>';
+                dayCode += '><div><a>' + daysCounter + '</a></div></td>';
                 if (currentWeekDay % 7 == 0)
                     dayCode += "</tr>";
                 daysCounter++;
@@ -287,7 +327,7 @@ $.fn.bic_calendar = function(options) {
          * @thanks http://kevin.vanzonneveld.net
          * @thanks http://www.desarrolloweb.com/manuales/manual-librerias-phpjs.html
          */
-        function checkdate(m, d, y) {
+        function checkDate(m, d, y) {
             return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= (new Date(y, m, 0)).getDate();
         }
 
@@ -296,7 +336,7 @@ $.fn.bic_calendar = function(options) {
          */
         function lastDay(month, year) {
             var lastDayValue = 28;
-            while (checkdate(month + 1, lastDayValue + 1, year)) {
+            while (checkDate(month + 1, lastDayValue + 1, year)) {
                 lastDayValue++;
             }
             return lastDayValue;
@@ -306,9 +346,12 @@ $.fn.bic_calendar = function(options) {
             var arrayFecha = fecha.split("/");
             if (arrayFecha.length != 3)
                 return false;
-            return checkdate(arrayFecha[1], arrayFecha[0], arrayFecha[2]);
+            return checkDate(arrayFecha[1], arrayFecha[0], arrayFecha[2]);
         }
 
+        /**
+         * check if there are ajax events
+         */
         function checkEvents(month, year) {
             if (reqAjax != false) {
                 //peticio ajax
@@ -319,7 +362,8 @@ $.fn.bic_calendar = function(options) {
                     dataType: 'json'
                 }).done(function(data) {
 
-                    events = [];
+                    if (typeof events == 'undefined')
+                        events = [];
 
                     $.each(data, function(k, v) {
                         events.push(data[k]);
@@ -333,6 +377,9 @@ $.fn.bic_calendar = function(options) {
             }
         }
 
+        /**
+         * mark all the events n create logic for them
+         */
         function markEvents(month, year) {
             var temporalMonth = month + 1;
 
@@ -340,38 +387,34 @@ $.fn.bic_calendar = function(options) {
 
                 if (events[i].date.split('/')[1] == temporalMonth && events[i].date.split('/')[2] == year) {
 
-                    $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass('event');
+                    var loopDayTd = $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_"));
+                    var loopDayA = $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a');
 
-                    $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('data-original-title', events[i].title);
+                    loopDayTd.addClass('event');
 
-                    //bg
+                    loopDayA.attr('data-original-title', events[i].title);
+
+                    //bg color
                     if (events[i].color)
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).css('background', events[i].color);
+                        loopDayTd.css('background', events[i].color);
 
                     //link
-                    if (events[i].link == '' || events[i].link == '#') {
-                        if (events[i].content != '') {
-                            $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('data-trigger', 'manual');
-                            $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').addClass('manual_popover');
-                        } else {
-                            $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('href', 'javascript:false;');
-                        }
-                    } else {
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('href', events[i].link);
+                    if (typeof events[i].link != 'undefined') {
+                        loopDayA.attr('href', events[i].link);
                     }
-                    
+
                     //class
                     if (events[i].class)
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass(events[i].class);
+                        loopDayTd.addClass(events[i].class);
 
                     //tooltip vs popover
                     if (events[i].content) {
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass('event_popover');
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('rel', 'popover');
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('data-content', events[i].content);
+                        loopDayTd.addClass('event_popover');
+                        loopDayA.attr('rel', 'popover');
+                        loopDayA.attr('data-content', events[i].content);
                     } else {
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass('event_tooltip');
-                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('rel', 'tooltip');
+                        loopDayTd.addClass('event_tooltip');
+                        loopDayA.attr('rel', 'tooltip');
                     }
                 }
             }
@@ -384,8 +427,95 @@ $.fn.bic_calendar = function(options) {
             });
         }
 
+        /**
+         * check if the user can mark days
+         */
+        function checkIfEnableMark() {
+            if (enableSelect == true) {
+
+                var eventBicCalendarSelect;
+
+                elem.on('click', 'td', function() {
+                    //if multiSelect
+                    if (multiSelect == true) {
+                        if (elem.find('.selection').length == 0) {
+                            //add class selection
+                            $(this).find('div').addClass('selection');
+                            //create n fire event
+                            var eventBicCalendarSelect = new CustomEvent("bicCalendarSelect", {
+                                detail: {
+                                    date: $(this).data('date')
+                                }
+                            });
+                            document.dispatchEvent(eventBicCalendarSelect);
+                        } else {
+                            if (elem.find('td div.first-selection').length == 0) {
+                                var oldSelected = elem.find('.selection');
+                                var newSelected = $(this).find('div');
+
+                                //remove all selected classes
+                                elem.find('td.selection').removeClass('middle-selection selection first-selection last-selection');
+
+                                //create date object from current dates selecteds
+                                var oldSelectedDate = new Date(oldSelected.parent().data('date'));
+                                var newSelectedDate = new Date(newSelected.parent().data('date'));
+
+                                //create a loop adding day per loop to set days
+                                if (oldSelectedDate > newSelectedDate) {
+                                    //turn vars date
+                                    var tempSelectedDate = oldSelectedDate;
+                                    oldSelectedDate = newSelectedDate;
+                                    newSelectedDate = tempSelectedDate;
+                                    //set first date
+                                    newSelected.addClass('selection first-selection');
+                                } else {
+                                    //set last date
+                                    oldSelected.addClass('selection first-selection');
+                                }
+
+                                while (oldSelectedDate < newSelectedDate) {
+                                    oldSelectedDate.setDate(oldSelectedDate.getDate() + 1);
+                                    //add class middle-selection
+                                    $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').addClass('selection middle-selection');
+                                }
+                                $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').removeClass('middle-selection').addClass('selection last-selection');
+
+
+                                //create n fire event
+                                var eventBicCalendarSelect = new CustomEvent("bicCalendarSelect", {
+                                    detail: {
+                                        dateFirst: elem.find('.first-selection').parent().data('date'),
+                                        dateLast: elem.find('.last-selection').parent().data('date'),
+                                    }
+                                });
+                                document.dispatchEvent(eventBicCalendarSelect);
+                            } else {
+                                elem.find('.selection').removeClass('middle-selection selection first-selection last-selection');
+                            }
+                        }
+                    } else {
+                        //remove the class selection of the others a
+                        elem.find('td div').removeClass('selection');
+                        //add class selection
+                        $(this).find('div').addClass('selection');
+                        //create n fire event
+                        var eventBicCalendarSelect = new CustomEvent("bicCalendarSelect", {
+                            detail: {
+                                date: $(this).data('date')
+                            }
+                        });
+                        document.dispatchEvent(eventBicCalendarSelect);
+                    }
+                })
+            }
+        }
+
         /*** --functions-- ***/
 
+
+
+        //fire calendar!
+        showCalendar();
 
 
     });
