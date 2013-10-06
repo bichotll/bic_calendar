@@ -20,6 +20,8 @@
 }
 .bic_calendar .header{
     padding: 10px 0 10px 0;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
 }
 .bic_calendar .button-month-previous{
     padding: 5px;
@@ -94,4 +96,16 @@
 }
 .bic_calendar .popover-content{
     font-weight: 300;
+}
+.bic_calendar .monthDisplayed{
+    margin: 5px;
+    margin-top: 25px;
+    border: 1px #ddd solid;
+    border-radius: 10px;
+}
+.bic_calendar .monthDisplayed .month{
+    text-align: center;
+    display: block;
+    font-weight: 600;
+    background: #eee;
 }

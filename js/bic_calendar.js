@@ -24,7 +24,8 @@ $.fn.bic_calendar = function(options) {
         var elem = $(this);
 
         var calendar;
-        var daysMonthLayer;
+        var layoutMonth;
+        var daysMonthsLayer;
         var textMonthCurrentLayer = $('<div class="visualmonth"></div>');
         var textYearCurrentLayer = $('<div class="visualyear"></div>');
 
@@ -101,41 +102,17 @@ $.fn.bic_calendar = function(options) {
         function showCalendar() {
 
             //layer with the days of the month (literals)
-            daysMonthLayer = $('<table class="table">');
-
-            listListeralsWeek();
+            daysMonthsLayer = $('<div id="monthsLayer" class="row"></div>');
 
             //Date obj to calc the day
             var objFecha = new Date();
+            objFecha.setMonth(0);
 
-            //current year n current month
-            var month = objFecha.getMonth();
+            //current year
             var year = objFecha.getFullYear();
 
             //show the days of the month n year configured
-            showMonthDays(month, year);
-
-            //next-previous month controllers
-            var nextMonthButton = $('<td><a href="#" class="button-month-next"><i class="glyphicon glyphicon-arrow-right" ></i></a></td>');
-            //event
-            nextMonthButton.click(function(e) {
-                e.preventDefault();
-                month = (month + 1) % 12;
-                if (month == 0)
-                    year++;
-                changeDate(month, year);
-            })
-            var previousMonthButton = $('<td><a href="#" class="button-month-previous"><i class="glyphicon glyphicon-arrow-left" ></i></a></td>');
-            //event
-            previousMonthButton.click(function(e) {
-                e.preventDefault();
-                month = (month - 1);
-                if (month == -1) {
-                    year--;
-                    month = 11;
-                }
-                changeDate(month, year);
-            })
+            showMonths(year);
 
             //next-previous year controllers
             var nextYearButton = $('<td><a href="#" class="button-year-next"><i class="glyphicon glyphicon-arrow-right" ></i></a></td>');
@@ -143,49 +120,41 @@ $.fn.bic_calendar = function(options) {
             nextYearButton.click(function(e) {
                 e.preventDefault();
                 year++;
-                changeDate(month, year);
+                changeDate(year);
             })
             var previousYearButton = $('<td><a href="#" class="button-year-previous"><i class="glyphicon glyphicon-arrow-left" ></i></a></td>');
             //event
             previousYearButton.click(function(e) {
                 e.preventDefault();
                 year--;
-                changeDate(month, year);
+                changeDate(year);
             })
 
 
             //show the current year n current month text layer
             var headerLayer = $('<table class="table header"></table>');
-            var monthTextLayer = $('<tr></tr>');
             var yearTextLayer = $('<tr></tr>');
-            var monthControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
             var yearControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
             
             yearTextLayer.append(previousYearButton);
             yearTextLayer.append(yearControlTextLayer);
             yearTextLayer.append(nextYearButton);
             yearControlTextLayer.append(textYearCurrentLayer);
-            
-            monthTextLayer.append(previousMonthButton);
-            monthTextLayer.append(monthControlTextLayer);
-            monthTextLayer.append(nextMonthButton);
-            monthControlTextLayer.append(textMonthCurrentLayer);
 
             headerLayer.append(yearTextLayer);
-            headerLayer.append(monthTextLayer);
             
             //calendar n border
-            calendar = $('<div class="bic_calendar row" id="' + calendarId + '" ></div>');
+            calendar = $('<div class="bic_calendar" id="' + calendarId + '" ></div>');
             calendar.prepend(headerLayer);
             //calendar.append(capaDiasSemana);
             //daysMonthLayer.prepend(capaDiasSemana);
-            calendar.append(daysMonthLayer);
+            calendar.append(daysMonthsLayer);
 
             //insert calendar in the document
             elem.append(calendar);
 
             //check and add events
-            checkEvents(month, year);
+            checkEvents(year);
 
             //if enable select
             checkIfEnableMark();
@@ -194,11 +163,10 @@ $.fn.bic_calendar = function(options) {
         /**
          * indeed, change month or year
          */
-        function changeDate(month, year) {
-            daysMonthLayer.empty();
-            listListeralsWeek();
-            showMonthDays(month, year);
-            checkEvents(month, year);
+        function changeDate(year) {
+            daysMonthsLayer.empty();
+            showMonths(year);
+            checkEvents(year);
         }
 
         /**
@@ -221,7 +189,16 @@ $.fn.bic_calendar = function(options) {
                 codigoInsertar += '</tr>';
                 capaDiasSemana.append(codigoInsertar);
 
-                daysMonthLayer.append(capaDiasSemana);
+                layoutMonth.append(capaDiasSemana);
+            }
+        }
+        
+        /**
+         * print months
+         */
+        function showMonths(year){
+            for (i=0;i!=12;i++){
+                showMonthDays(i, year);
             }
         }
 
@@ -229,6 +206,9 @@ $.fn.bic_calendar = function(options) {
          * show the days of the month
          */
         function showMonthDays(month, year) {
+            
+            //layoutMonth
+            layoutMonth = $('<table class="table"></table>');
 
             //print year n month in layers
             textMonthCurrentLayer.text(monthName[month]);
@@ -311,8 +291,19 @@ $.fn.bic_calendar = function(options) {
                     daysMonthLayerString += dayCode
                 }
             }
+            
+            listListeralsWeek();
+            
+            layoutMonth.append(daysMonthLayerString);
+            
+            layoutMonth = $('<div class="monthDisplayed" ></div>').append(layoutMonth);
+            
+            layoutMonth.prepend($('<div class="month" >' + monthName[month] + '</div>'));
+            
+            layoutMonth = $('<div class="col-md-4" ></div>').append(layoutMonth);
+            
 
-            daysMonthLayer.append(daysMonthLayerString);
+            daysMonthsLayer.append(layoutMonth);
         }
 
         /**
@@ -359,7 +350,7 @@ $.fn.bic_calendar = function(options) {
         /**
          * check if there are ajax events
          */
-        function checkEvents(month, year) {
+        function checkEvents(year) {
             if (reqAjax != false) {
                 //peticio ajax
                 $.ajax({
@@ -380,19 +371,18 @@ $.fn.bic_calendar = function(options) {
 
                 });
             } else {
-                markEvents(month, year);
+                markEvents(year);
             }
         }
 
         /**
          * mark all the events n create logic for them
          */
-        function markEvents(month, year) {
-            var temporalMonth = month + 1;
+        function markEvents(year) {
 
             for (var i = 0; i < events.length; i++) {
 
-                if (events[i].date.split('/')[1] == temporalMonth && events[i].date.split('/')[2] == year) {
+                if (events[i].date.split('/')[2] == year) {
 
                     var loopDayTd = $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_"));
                     var loopDayA = $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a');
