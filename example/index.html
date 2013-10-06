@@ -62,21 +62,27 @@
 
                             var days = ["L", "M", "M", "J", "V", "S", "D"];
 
-                            $('#calendari_lateral1').bic_calendar({
-                                monthNames: monthNames,
-                                days: days,
-                                reqAjax: {
-                                    type: 'get',
-                                    url: 'http://bic.cat/bic_calendar/index.php'
+                            var events = [
+                                {
+                                    date: "28/11/2013",
+                                    title: 'SPORT & WELLNESS',
+                                    link: '',
+                                    color: '',
+                                    content: '<a href="http://sport-wellness.gettingcontacts.com/es/" ><img src="http://gettingcontacts.com/upload/jornadas/sport-wellness_portada.png" ><br>06-11-2013 - 09:00 <br> Tecnocampus Mataró Auditori</a>',
+                                    class: ''
                                 }
+                            ];
+
+                            $('#calendari_lateral1').bic_calendar({
+                                events: events
                             });
                         });
                     </script>
                     <div id="calendari_lateral1"></div>
                 </div>
             </div>
-            
-            
+
+
             <div class="jumbotron">
                 <h1>BIC Calendar</h1><br>
                 <p>ca - BIC Calendar es un simple calendari per marcar esdeveniments. Un plugin de jQuery i Twitter Bootstrap.</p>

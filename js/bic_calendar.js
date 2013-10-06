@@ -267,7 +267,7 @@ $.fn.bic_calendar = function(options) {
 
             daysMonthLayer.append(daysMonthLayerString);
         }
-        
+
         /**
          * calc the number of the week day
          */
@@ -338,37 +338,40 @@ $.fn.bic_calendar = function(options) {
 
             for (var i = 0; i < events.length; i++) {
 
-                if (events[i][0].split('/')[1] == temporalMonth && events[i][0].split('/')[2] == year) {
+                if (events[i].date.split('/')[1] == temporalMonth && events[i].date.split('/')[2] == year) {
 
-                    $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_")).addClass('event');
+                    $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass('event');
 
-                    $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').attr('data-original-title', events[i][1]);
+                    $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('data-original-title', events[i].title);
 
                     //bg
-                    if (events[i][3])
-                        $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_")).css('background', events[i][3]);
+                    if (events[i].color)
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).css('background', events[i].color);
 
                     //link
-                    if (events[i][2] == '' || events[i][2] == '#') {
-                        if (events[i][4] != '') {
-                            $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').attr('data-trigger', 'manual');
-                            $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').addClass('manual_popover');
+                    if (events[i].link == '' || events[i].link == '#') {
+                        if (events[i].content != '') {
+                            $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('data-trigger', 'manual');
+                            $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').addClass('manual_popover');
                         } else {
-                            $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').attr('href', 'javascript:false;');
+                            $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('href', 'javascript:false;');
                         }
                     } else {
-                        $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').attr('href', events[i][2]);
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('href', events[i].link);
                     }
-
+                    
+                    //class
+                    if (events[i].class)
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass(events[i].class);
 
                     //tooltip vs popover
-                    if (events[i][4]) {
-                        $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_")).addClass('event_popover');
-                        $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').attr('rel', 'popover');
-                        $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').attr('data-content', events[i][4]);
+                    if (events[i].content) {
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass('event_popover');
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('rel', 'popover');
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('data-content', events[i].content);
                     } else {
-                        $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_")).addClass('event_tooltip');
-                        $('#' + calendarId + '_' + events[i][0].replace(/\//g, "_") + ' a').attr('rel', 'tooltip');
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_")).addClass('event_tooltip');
+                        $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a').attr('rel', 'tooltip');
                     }
                 }
             }

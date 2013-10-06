@@ -8,8 +8,13 @@
     color: #333;
     cursor: pointer;
 }
-.bic_calendar td{
+.bic_calendar .table tbody > tr > td{
     text-align: center;
+    padding: 0;
+}
+.bic_calendar td a{
+    display: block;
+    padding: 5px;
 }
 .bic_calendar .header{
     padding: 10px 0 10px 0;
@@ -44,12 +49,21 @@
 .bic_calendar .event a{
     color: white;
 }
-.bic_calendar .table td{
-    padding: 5px;
-}
 .bic_calendar .table{
     margin-bottom: 3px;
 }
 .bic_calendar .days-month td{
     background: #f0f0f0 ;
+}
+.bic_calendar .selection{
+    border: 2px yellow solid;
+}
+.bic_calendar .first-selection{
+    border-left: 0;
+}
+.bic_calendar .last-selection{
+    border: 2px yellow solid;
+}
+.bic_calendar .middle-selection{
+    border: 2px yellow solid;
 }
