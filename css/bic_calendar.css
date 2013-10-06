@@ -14,17 +14,17 @@
 .bic_calendar .header{
     padding: 10px 0 10px 0;
 }
-.bic_calendar .botonmesanterior{
+.bic_calendar .button-month-previous{
     float: left;
 }
-.bic_calendar .botonmessiguiente{
+.bic_calendar .button-month-next{
     float: right;
 }
-.bic_calendar .mesyano{
+.bic_calendar .monthAndYear{
     text-align: center;
     font-weight: 500;
 }
-.bic_calendar .dias_semana{
+.bic_calendar .days-month{
     font-weight: 500;
 }
 .bic_calendar .event{
@@ -50,6 +50,6 @@
 .bic_calendar .table{
     margin-bottom: 3px;
 }
-.bic_calendar .dias_semana td{
+.bic_calendar .days-month td{
     background: #f0f0f0 ;
 }
