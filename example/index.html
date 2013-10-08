@@ -56,6 +56,8 @@
         <a href="https://github.com/bichotll/bic_calendar"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
         <div class="container">
 
+            <br><br>
+
             <div class="row" >
                 <div class="col-md-12" >
                     <script>
@@ -82,13 +84,13 @@
                         });
                     </script>
                     <form>
-                        <label>desde</label>
+                        <label>from</label>
                         <input id="from-day" disabled >
-                        <label>hasta</label>
+                        <label>to</label>
                         <input id="to-day" disabled >
                         <input type="submit" >
                     </form>
-                    <p>Dias de vacaciones: <span id="dias-no-laborales"></span></p>
+                    <p><b>Holiday days:</b> <span id="dias-no-laborales"></span></p>
                 </div>
             </div>
 
@@ -142,15 +144,8 @@
                     <div id="calendari_lateral1"></div>
                 </div>
             </div>
-
-
-            <div class="jumbotron">
-                <h1>BIC Calendar</h1><br>
-                <p>ca - BIC Calendar es un simple calendari per marcar esdeveniments. Un plugin de jQuery i Twitter Bootstrap.</p>
-
-                <p>en - BIC Calendar is a simple calendar to mark events, a jQuery plugin and Twitter Bootstrap.</p>
-            </div>
-
+            
+            <br><br>
 
             <div class="row" >
                 <div class="col-md-8 pintam" >
@@ -164,89 +159,97 @@
 
                         <hr>
 
-                        <h3>Options<h3>
+                        <h3>Options</h3>
 
-                                <h5></h5>
+                        <h5></h5>
 
-                                <dl>
-                                    <dt>popoverOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#popovers" target="_blank" >popover Twitter Bootstrap</a> object)</dt>
+                        <dl>
+                            <dt>popoverOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#popovers" target="_blank" >popover Twitter Bootstrap</a> object)</dt>
 
-                                    <dt>tooltipOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#tooltips" target="_blank" >tooltip Twitter Bootstrap</a> object)</dt>
+                            <dt>tooltipOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#tooltips" target="_blank" >tooltip Twitter Bootstrap</a> object)</dt>
 
-                                    <dt>dayNames (array)</dt>
-                                    <dd>default: ["l", "m", "x", "j", "v", "s", "d"]</dd>
+                            <dt>dayNames (array)</dt>
+                            <dd>default: ["l", "m", "x", "j", "v", "s", "d"]</dd>
 
-                                    <dt>monthNames (array)</dt>
-                                    <dd>default: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]</dd>
+                            <dt>monthNames (array)</dt>
+                            <dd>default: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]</dd>
 
-                                    <dt>showDays (boolean)</dt>
-                                    <dd>default: true</dd>
+                            <dt>showDays (boolean)</dt>
+                            <dd>default: true</dd>
 
-                                    <dt>reqAjax (json array of event array)</dt>
-                                    <dd>
-                                        - reqAjax.type (string) {'get', 'post'}<br>
-                                        - reqAjax.url (string)
-                                    </dd>
+                            <dt>reqAjax (json array of event array)</dt>
+                            <dd>
+                                - reqAjax.type (string) {'get', 'post'}<br>
+                                - reqAjax.url (string)
+                            </dd>
 
-                                    <dt>events (array of event array)</dt>
+                            <dt>events (array of event array)</dt>
 
-                                    <br>
+                            <br>
 
-                                    <dt>Event (array)</dt>
-                                    <dd>
-                                        <b>date</b> (string):<br>
-                                        ex: "17/8/1989"
-                                    </dd>
-                                    <dd>
-                                        <b>title</b> (string):<br>
-                                        ex: "Event Barberà"
-                                    </dd>
-                                    <dd>
-                                        <b>link</b> (string):<br>
-                                        ex: "http://google.es"
-                                    </dd>
-                                    <dd>
-                                        <b>color</b> (string):<br>
-                                        ex: "#333"
-                                    </dd>
-                                    <dd>
-                                        <b>class</b> (string):<br>
-                                        ex: "activo congreso"
-                                    </dd>
-                                    <dd>
-                                        <b>content</b> (string):<br>
-                                        ex: "Text for the content of popover...description of event...image..."
-                                        <br>
-                                        <b>*</b> <i>if content is not defined it will be a tooltip</i>
-                                    </dd>
-                                </dl>
+                            <dt>Event (array)</dt>
+                            <dd>
+                                <b>date</b> (string):<br>
+                                ex: "17/8/1989"
+                            </dd>
+                            <dd>
+                                <b>title</b> (string):<br>
+                                ex: "Event Barberà"
+                            </dd>
+                            <dd>
+                                <b>link</b> (string):<br>
+                                ex: "http://google.es"
+                            </dd>
+                            <dd>
+                                <b>color</b> (string):<br>
+                                ex: "#333"
+                            </dd>
+                            <dd>
+                                <b>class</b> (string):<br>
+                                ex: "activo congreso"
+                            </dd>
+                            <dd>
+                                <b>content</b> (string):<br>
+                                ex: "Text for the content of popover...description of event...image..."
+                                <br>
+                                <b>*</b> <i>if content is not defined it will be a tooltip</i>
+                            </dd>
+                        </dl>
 
-                                <hr>
+                        <hr>
 
-                                <h3>Use example</h3>
+                        <h3>Use example</h3>
 
 
-                                </div>
-                                </div>
-                                </div>
+                    </div>
+                </div>
 
-                                <footer>
-                                    <p>
-                                        <a href="http://bic.cat" >bic.cat</a>
-                                    </p>
-                                </footer>
-                                </div>
-                                <!-- Piwik --> 
-                                <!--script type="text/javascript">
-                                var pkBaseURL = (("https:" == document.location.protocol) ? "https://bic.cat/piwik/" : "http://bic.cat/piwik/");
-                                document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-                                </script><script type="text/javascript">
-                                try {
-                                var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 3);
-                                piwikTracker.trackPageView();
-                                piwikTracker.enableLinkTracking();
-                                } catch( err ) {}
-                                </script--><noscript><p><img src="http://bic.cat/piwik/piwik.php?idsite=3" style="border:0" alt="" /></p></noscript>
-                                <!-- End Piwik Tracking Code -->
-                                </body>
-                                </html>
+                <div class="col-md-4" >
+                    <h1>BIC Calendar</h1><br>
+                    <p>ca - BIC Calendar es un simple calendari per marcar esdeveniments. Un plugin de jQuery i Twitter Bootstrap.</p>
+
+                    <p>en - BIC Calendar is a simple calendar to mark events, a jQuery plugin and Twitter Bootstrap.</p>
+                </div>
+
+            </div>
+
+            <footer>
+                <p>
+                    <a href="http://bic.cat" >bic.cat</a>
+                </p>
+            </footer>
+        </div>
+        <!-- Piwik --> 
+        <!--script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://bic.cat/piwik/" : "http://bic.cat/piwik/");
+        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+        </script><script type="text/javascript">
+        try {
+        var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 3);
+        piwikTracker.trackPageView();
+        piwikTracker.enableLinkTracking();
+        } catch( err ) {}
+        </script--><noscript><p><img src="http://bic.cat/piwik/piwik.php?idsite=3" style="border:0" alt="" /></p></noscript>
+        <!-- End Piwik Tracking Code -->
+    </body>
+</html>

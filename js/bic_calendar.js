@@ -229,20 +229,16 @@ $.fn.bic_calendar = function(options) {
                     var dayCode = "";
                     if (i == 0)
                         dayCode += "<tr>";
-                    //if the first day of the week i is menor than the number of the first day of the week it doesn't print nothing inside
-                    dayCode += '<td class="invalid-day';
-                    if (i == 0)
-                        dayCode += " primero";
+                    //add weekDay
+                    dayCode += '<td class="invalid-day week-day-'+ i +'"';
                     dayCode += '"></td>';
                 } else {
                     var dayCode = "";
                     if (i == 0)
                         dayCode += '<tr>';
                     dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
-                    if (i == 0)
-                        dayCode += ' class="primero"';
-                    if (i == 6)
-                        dayCode += ' class="ultimo domingo"';
+                    //add weekDay
+                    dayCode += ' class="week-day-'+ i +'"';
                     dayCode += '><div><a>' + daysCounter + '</a></div></span>';
                     if (i == 6)
                         dayCode += '</tr>';
@@ -258,12 +254,8 @@ $.fn.bic_calendar = function(options) {
                 if (currentWeekDay % 7 == 1)
                     dayCode += "<tr>";
                 dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
-                //if we are in the beginning of the week it add class first
-                if (currentWeekDay % 7 == 1)
-                    dayCode += ' class="first"';
-                //if we are in the end and it's sunday last
-                if (currentWeekDay % 7 == 0)
-                    dayCode += ' class="sunday last"';
+                //add weekDay
+                dayCode += ' class="week-day-'+ i +'"';
                 dayCode += '><div><a>' + daysCounter + '</a></div></td>';
                 if (currentWeekDay % 7 == 0)
                     dayCode += "</tr>";
@@ -278,9 +270,9 @@ $.fn.bic_calendar = function(options) {
                 dayCode = "";
                 for (var i = (currentWeekDay % 7) + 1; i <= 7; i++) {
                     var dayCode = "";
-                    dayCode += '<td class="invalid-day';
-                    if (i == 7)
-                        dayCode += ' ultimo'
+                    dayCode += '<td ';
+                    //add weekDay
+                    dayCode += ' class="invalid-day week-day-'+ i +'"';
                     dayCode += '"></td>';
                     if (i == 7)
                         dayCode += '</tr>'
