@@ -255,7 +255,7 @@ $.fn.bic_calendar = function(options) {
                     dayCode += "<tr>";
                 dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
                 //add weekDay
-                dayCode += ' class="week-day-'+ i +'"';
+                dayCode += ' class="week-day-'+ ((currentWeekDay-1)%7) +'"';
                 dayCode += '><div><a>' + daysCounter + '</a></div></td>';
                 if (currentWeekDay % 7 == 0)
                     dayCode += "</tr>";
@@ -272,7 +272,7 @@ $.fn.bic_calendar = function(options) {
                     var dayCode = "";
                     dayCode += '<td ';
                     //add weekDay
-                    dayCode += ' class="invalid-day week-day-'+ i +'"';
+                    dayCode += ' class="invalid-day week-day-'+ (i-1) +'"';
                     dayCode += '"></td>';
                     if (i == 7)
                         dayCode += '</tr>'
