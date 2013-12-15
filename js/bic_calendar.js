@@ -83,11 +83,11 @@ $.fn.bic_calendar = function(options) {
         var displayYearController = true;
         if (typeof opts.displayYearController != 'undefined')
             displayYearController = opts.displayYearController;
-        
+
         var firstDaySelected = '';
         var lastDaySelected = '';
         var daySelected = '';
-        
+
         /*** --vars-- ***/
 
 
@@ -157,24 +157,28 @@ $.fn.bic_calendar = function(options) {
 
             //show the current year n current month text layer
             var headerLayer = $('<table class="table header"></table>');
-            var monthTextLayer = $('<tr></tr>');
-            var yearTextLayer = $('<tr></tr>');
-            var monthControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
-            var yearControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
-            
-            yearTextLayer.append(previousYearButton);
-            yearTextLayer.append(yearControlTextLayer);
-            yearTextLayer.append(nextYearButton);
-            yearControlTextLayer.append(textYearCurrentLayer);
-            
-            monthTextLayer.append(previousMonthButton);
-            monthTextLayer.append(monthControlTextLayer);
-            monthTextLayer.append(nextMonthButton);
-            monthControlTextLayer.append(textMonthCurrentLayer);
 
-            headerLayer.append(yearTextLayer);
-            headerLayer.append(monthTextLayer);
-            
+            if (displayYearController === true) {
+                var yearTextLayer = $('<tr></tr>');
+                var yearControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
+
+                yearTextLayer.append(previousYearButton);
+                yearTextLayer.append(yearControlTextLayer);
+                yearTextLayer.append(nextYearButton);
+                yearControlTextLayer.append(textYearCurrentLayer);
+                headerLayer.append(yearTextLayer);
+            }
+            if (displayMonthController === true) {
+                var monthTextLayer = $('<tr></tr>');
+                var monthControlTextLayer = $('<td colspan=5 class="monthAndYear span6"></td>');
+
+                monthTextLayer.append(previousMonthButton);
+                monthTextLayer.append(monthControlTextLayer);
+                monthTextLayer.append(nextMonthButton);
+                monthControlTextLayer.append(textMonthCurrentLayer);
+                headerLayer.append(monthTextLayer);
+            }
+
             //calendar n border
             calendar = $('<div class="bic_calendar row" id="' + calendarId + '" ></div>');
             calendar.prepend(headerLayer);
@@ -256,7 +260,7 @@ $.fn.bic_calendar = function(options) {
                     if (i == 0)
                         dayCode += "<tr>";
                     //add weekDay
-                    dayCode += '<td class="invalid-day week-day-'+ i +'"';
+                    dayCode += '<td class="invalid-day week-day-' + i + '"';
                     dayCode += '"></td>';
                 } else {
                     var dayCode = "";
@@ -264,7 +268,7 @@ $.fn.bic_calendar = function(options) {
                         dayCode += '<tr>';
                     dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
                     //add weekDay
-                    dayCode += ' class="day week-day-'+ i +'"';
+                    dayCode += ' class="day week-day-' + i + '"';
                     dayCode += '><div><a>' + daysCounter + '</a></div></span>';
                     if (i == 6)
                         dayCode += '</tr>';
@@ -281,7 +285,7 @@ $.fn.bic_calendar = function(options) {
                     dayCode += "<tr>";
                 dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
                 //add weekDay
-                dayCode += ' class="day week-day-'+ ((currentWeekDay-1)%7) +'"';
+                dayCode += ' class="day week-day-' + ((currentWeekDay - 1) % 7) + '"';
                 dayCode += '><div><a>' + daysCounter + '</a></div></td>';
                 if (currentWeekDay % 7 == 0)
                     dayCode += "</tr>";
@@ -298,7 +302,7 @@ $.fn.bic_calendar = function(options) {
                     var dayCode = "";
                     dayCode += '<td ';
                     //add weekDay
-                    dayCode += ' class="invalid-day week-day-'+ (i-1) +'"';
+                    dayCode += ' class="invalid-day week-day-' + (i - 1) + '"';
                     dayCode += '"></td>';
                     if (i == 7)
                         dayCode += '</tr>'
@@ -400,8 +404,11 @@ $.fn.bic_calendar = function(options) {
                         loopDayTd.css('background', events[i].color);
 
                     //link
-                    if (typeof events[i].link != 'undefined') {
+                    if (typeof events[i].link != 'undefined' && events[i].link != '') {
                         loopDayA.attr('href', events[i].link);
+                    }
+                    if (typeof events[i].linkTarget != 'undefined' && events[i].linkTarget != '') {
+                        loopDayA.attr('target', events[i].linkTarget);
                     }
 
                     //class
@@ -447,7 +454,7 @@ $.fn.bic_calendar = function(options) {
                                 //set firstDaySelected
                                 firstDaySelected = daySelected;
                                 lastDaySelected = $(this).data('date');
-                                
+
                                 markSelectedDays();
 
                                 //create n fire event

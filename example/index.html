@@ -19,6 +19,8 @@
         <script src="lib/js/bootstrap.min.js"></script>
         <link href="../css/bic_calendar.css" rel="stylesheet">
 
+        <script src="https://rawgithub.com/moment/moment/develop/min/moment-with-langs.min.js"></script>
+
         <style>
             body{
                 background: #f0f0f0;
@@ -28,7 +30,7 @@
                 background-repeat: repeat-x;
                 background-attachment: fixed;
             }
-            body, div, col-md-, p, a, h1, h2, h3, h3, h5, h5{
+            body, div, col-sm-, p, a, h1, h2, h3, h3, h5, h5{
                 font-family: 'Ubuntu', sans-serif;
             }
             footer{
@@ -56,15 +58,96 @@
         <a href="https://github.com/bichotll/bic_calendar"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
         <div class="container">
 
-            <div class="jumbotron">
-                <h1>BIC Calendar</h1><br>
-                <p>ca - BIC Calendar es un simple calendari per marcar esdeveniments. Un plugin de jQuery i Twitter Bootstrap.</p>
-                <p>en - BIC Calendar is a simple calendar to mark events, a jQuery plugin and Twitter Bootstrap.</p>
-            </div>
-
 
             <div class="row" >
-                <div class="col-md-8 pintam" >
+                <div class="col-sm-4" >
+
+                    <script>
+                        $(document).ready(function() {
+
+                            var monthNames = ["Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Dicembre"];
+
+                            var dayNames = ["L", "M", "M", "J", "V", "S", "D"];
+
+                            var events = [
+                                {
+                                    date: "28/12/2013",
+                                    title: 'SPORT & WELLNESS',
+                                    link: 'http://bic.cat',
+                                    linkTarget: '_blank',
+                                    color: '',
+                                    content: '<img src="http://gettingcontacts.com/upload/jornadas/sport-wellness_portada.png" ><br>06-11-2013 - 09:00 <br> Tecnocampus Mataró Auditori',
+                                    class: '',
+                                    displayMonthController: true,
+                                    displayYearController: true,
+                                    nMonths: 6
+                                }
+                            ];
+
+                            $('#calendari_lateral1').bic_calendar({
+                                //list of events in array
+                                events: events,
+                                //enable select
+                                enableSelect: true,
+                                //enable multi-select
+                                multiSelect: true,
+                                //set day names
+                                dayNames: dayNames,
+                                //set month names
+                                monthNames: monthNames,
+                                //show dayNames
+                                showDays: true,
+                                //show month controller
+                                displayMonthController: true,
+                                //show year controller
+                                displayYearController: true,                                
+                                //set ajax call
+                                reqAjax: {
+                                    type: 'get',
+                                    url: 'http://bic.cat/bic_calendar/index.php'
+                                }
+                            });
+                        });
+                    </script>
+                    <div id="calendari_lateral1"></div>
+                </div>
+                <div class="col-sm-8" >
+
+                    <script>
+                        $(document).ready(function() {
+                            document.addEventListener('bicCalendarSelect', function(e) {
+                                moment.lang('es'); // default the language to English
+                                var dateFirst = new moment(e.detail.dateFirst);
+                                var dateLast = new moment(e.detail.dateLast);
+
+                                $('#from-day').val(dateFirst.format('LL'));
+                                $('#to-day').val(dateLast.format('LL'));
+
+                                /*
+                                 * more about moment.js
+                                 * http://momentjs.com/docs/#/displaying/
+                                 */
+                            });
+                        });
+                    </script>
+                    <h3>Example events select with <a href="http://momentjs.com/" >moment.js</a>:</h3>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">from</label> 
+                            <input id="from-day" disabled >
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">to</label> 
+                            <input id="to-day" disabled >
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row" >
+                <div class="col-sm-8 pintam" >
                     <div class="atzucac" >
                         <h3>Dependencias</h3>
 
@@ -80,10 +163,8 @@
                         <h5></h5>
 
                         <dl>
-                            <dt>popoverOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#popovers" target="_blank" >popover Twitter Bootstrap</a> object)</dt>
-
-                            <dt>tooltipOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#tooltips" target="_blank" >tooltip Twitter Bootstrap</a> object)</dt>
-
+                            <dt>events  (array of event object)</dt>
+                            
                             <dt>dayNames (array)</dt>
                             <dd>default: ["l", "m", "x", "j", "v", "s", "d"]</dd>
 
@@ -98,41 +179,73 @@
                                 - reqAjax.type (string) {'get', 'post'}<br>
                                 - reqAjax.url (string)
                             </dd>
+                            
+                            <dt>enableSelect (boolean)</dt>
+                            <dd>default: false</dd>
+                            
+                            <dt>multiSelect (boolean)</dt>
+                            <dd>default: false</dd>
+                            
+                            <dt>displayMonthController (boolean)</dt>
+                            <dd>default: true</dd>
+                            
+                            <dt>displayYearController (boolean)</dt>
+                            <dd>default: true</dd>
+                            
+                            <dt>popoverOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#popovers" target="_blank" >popover Twitter Bootstrap</a> object)</dt>
 
-                            <dt>events (array of event object)</dt>
-
+                            <dt>tooltipOptions (<a href="http://twitter.github.com/bootstrap/javascript.html#tooltips" target="_blank" >tooltip Twitter Bootstrap</a> object)</dt>
                         </dl>
+                        
+                        <hr>
+
+                        <h3>Event object</h3>
                         <dl>
+                            <dt>date(string):</dt>
+                            <dd>ex: "17/8/1989"</dd>
 
-                            <dt>Event (array)</dt>
-                            <dd>
-                                <b>date</b> (string):<br>
-                                ex: "17/8/1989"
-                            </dd>
-                            <dd>
-                                <b>title</b> (string):<br>
-                                ex: "Event Barberà"
-                            </dd>
-                            <dd>
-                                <b>link</b> (string):<br>
-                                ex: "http://google.es"
-                            </dd>
-                            <dd>
-                                <b>color</b> (string):<br>
-                                ex: "#333"
-                            </dd>
-                            <dd>
-                                <b>class</b> (string):<br>
-                                ex: "activo congreso"
-                            </dd>
-                            <dd>
-                                <b>content</b> (string):<br>
-                                ex: "Text for the content of popover...description of event...image..."
-                                <br>
-                                <b>*</b> <i>if content is not defined it will be a tooltip</i>
-                            </dd>
+                            <dt>title (string)</dt>
+                            <dd>ex: "Event Barberà"</dd>
+
+                            <dt>link (string)</dt>
+                            <dd>ex: "http://google.es"</dd>
+
+                            <dt>color(string)</dt>
+                            <dd>ex: "#333"</dd>
+
+                            <dt>class (string)</dt>
+                            <dd>ex: "activo congreso"</dd>
+
+                            <dt>content (string)</dt>
+                            <dd>ex: "Text for the content of popover...description of event...image..."</dd>
                         </dl>
+                        <b>*</b> <i>if content is not defined it will be a tooltip</i>
 
+                        <hr>
+                        
+                        <h3>Event bicCalendarSelect</h3>
+                        
+                        <h4>Response:</h4>
+                        <dl>
+                            <dt>detail.dateFirst</dt>
+                            <dd>12/26/1989</dd>
+                            <dt>detail.dateLast</dt>
+                            <dd>12/12/1992</dd>
+                        </dl>
+                        <h4>Example code:</h4>
+                        <pre>
+document.addEventListener('bicCalendarSelect', function(e) {
+    moment.lang('es'); // default the language to English
+    var dateFirst = new moment(e.detail.dateFirst);
+    var dateLast = new moment(e.detail.dateLast);
+
+    $('#from-day').val(dateFirst.format('LL'));
+    $('#to-day').val(dateLast.format('LL'));
+
+});
+                        </pre>
+                        
+                        
                         <hr>
 
                         <h3>Showcase</h3>
@@ -142,36 +255,10 @@
                     </div>
                 </div>
 
-                <div class="col-md-4" >
-                    <script>
-                        $(document).ready(function() {
-
-                            var monthNames = ["Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Dicembre"];
-
-                            var days = ["L", "M", "M", "J", "V", "S", "D"];
-
-                            var events = [
-                                {
-                                    date: "28/12/2013",
-                                    title: 'SPORT & WELLNESS',
-                                    link: '',
-                                    color: '',
-                                    content: '<img src="http://gettingcontacts.com/upload/jornadas/sport-wellness_portada.png" ><br>06-11-2013 - 09:00 <br> Tecnocampus Mataró Auditori',
-                                    class: '',
-                                    displayMonthController: true,
-                                    displayYearController: true,
-                                    nMonths: 6
-                                }
-                            ];
-
-                            $('#calendari_lateral1').bic_calendar({
-                                events: events,
-                                enableSelect: true,
-                                multiSelect: true
-                            });
-                        });
-                    </script>
-                    <div id="calendari_lateral1"></div>
+                <div class="col-sm-4" >
+                    <h1>BIC Calendar</h1><br>
+                    <p>ca - BIC Calendar es un simple calendari per marcar esdeveniments. Un plugin de jQuery i Twitter Bootstrap.</p>
+                    <p>en - BIC Calendar is a simple calendar to mark events, a jQuery plugin and Twitter Bootstrap.</p>
                 </div>
             </div>
 
