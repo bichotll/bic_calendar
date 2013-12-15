@@ -1,7 +1,7 @@
 {
   "name": "bic_calendar",
   "title": "Bic Calendar",
-  "description": "A simple twitter bootstrap calendar / agenda to mark events",
+  "description": "A simple twitter bootstrap calendar / agenda to mark events and select range of dates.",
   "keywords": [
     "ui",
     "calendar",
@@ -10,7 +10,7 @@
     "html5",
     "mobile"
   ],
-  "version": "2.0.8",
+  "version": "3.0.0",
   "author": {
     "name": "bichotll",
     "url": "http://bic.cat"
