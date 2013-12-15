@@ -96,3 +96,13 @@ document.addEventListener('bicCalendarSelect', function(e) {
 
 });
 ```
+
+Related forks
+-------------
+
+ - [Bic Calendar Full](https://github.com/bichotll/bic_calendar_full)
+    - Just a fork to show the full year. As this one the user can mark ranges.
+ - [Bootstrap monthly calendar](http://nbblrr.github.io/bootstrap_monthly_calendar/)
+    - A simple monthly calendar.
+ - [Bootstrap Calendar](https://github.com/xero/bootstrap_calendar)
+    - If you are looking to work with TwBoot 2X maybe this one is better.
