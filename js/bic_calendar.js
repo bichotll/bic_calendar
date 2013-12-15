@@ -32,17 +32,17 @@ $.fn.bic_calendar = function(options) {
 
         var events = opts.events;
 
-        var days;
-        if (typeof opts.days != "undefined")
-            days = opts.days;
+        var dayNames;
+        if (typeof opts.dayNames != "undefined")
+            dayNames = opts.dayNames;
         else
-            days = ["l", "m", "x", "j", "v", "s", "d"];
+            dayNames = ["l", "m", "x", "j", "v", "s", "d"];
 
-        var monthName;
-        if (typeof opts.monthName != "undefined")
-            monthName = opts.monthName;
+        var monthNames;
+        if (typeof opts.monthNames != "undefined")
+            monthNames = opts.monthNames;
         else
-            monthName = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
         var showDays;
         if (typeof opts.showDays != "undefined")
@@ -86,6 +86,7 @@ $.fn.bic_calendar = function(options) {
         
         var firstDaySelected = '';
         var lastDaySelected = '';
+        var daySelected = '';
         
         /*** --vars-- ***/
 
@@ -199,6 +200,7 @@ $.fn.bic_calendar = function(options) {
             listListeralsWeek();
             showMonthDays(month, year);
             checkEvents(month, year);
+            markSelectedDays();
         }
 
         /**
@@ -208,13 +210,13 @@ $.fn.bic_calendar = function(options) {
             if (showDays != false) {
                 var capaDiasSemana = $('<tr class="days-month" >');
                 var codigoInsertar = '';
-                $(days).each(function(indice, valor) {
+                $(dayNames).each(function(indice, valor) {
                     codigoInsertar += '<td';
                     if (indice == 0) {
-                        codigoInsertar += ' class="primero"';
+                        codigoInsertar += ' class="first"';
                     }
                     if (indice == 6) {
-                        codigoInsertar += ' class="domingo ultimo"';
+                        codigoInsertar += ' class="sunday last"';
                     }
                     codigoInsertar += ">" + valor + '</td>';
                 });
@@ -231,7 +233,7 @@ $.fn.bic_calendar = function(options) {
         function showMonthDays(month, year) {
 
             //print year n month in layers
-            textMonthCurrentLayer.text(monthName[month]);
+            textMonthCurrentLayer.text(monthNames[month]);
             textYearCurrentLayer.text(year);
 
             //show days of the month
@@ -253,20 +255,16 @@ $.fn.bic_calendar = function(options) {
                     var dayCode = "";
                     if (i == 0)
                         dayCode += "<tr>";
-                    //if the first day of the week i is menor than the number of the first day of the week it doesn't print nothing inside
-                    dayCode += '<td class="invalid-day';
-                    if (i == 0)
-                        dayCode += " primero";
+                    //add weekDay
+                    dayCode += '<td class="invalid-day week-day-'+ i +'"';
                     dayCode += '"></td>';
                 } else {
                     var dayCode = "";
                     if (i == 0)
                         dayCode += '<tr>';
                     dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
-                    if (i == 0)
-                        dayCode += ' class="primero"';
-                    if (i == 6)
-                        dayCode += ' class="ultimo domingo"';
+                    //add weekDay
+                    dayCode += ' class="day week-day-'+ i +'"';
                     dayCode += '><div><a>' + daysCounter + '</a></div></span>';
                     if (i == 6)
                         dayCode += '</tr>';
@@ -282,12 +280,8 @@ $.fn.bic_calendar = function(options) {
                 if (currentWeekDay % 7 == 1)
                     dayCode += "<tr>";
                 dayCode += '<td id="' + calendarId + '_' + daysCounter + "_" + nMonth + "_" + year + '" data-date="' + nMonth + "/" + daysCounter + "/" + year + '" ';
-                //if we are in the beginning of the week it add class first
-                if (currentWeekDay % 7 == 1)
-                    dayCode += ' class="first"';
-                //if we are in the end and it's sunday last
-                if (currentWeekDay % 7 == 0)
-                    dayCode += ' class="sunday last"';
+                //add weekDay
+                dayCode += ' class="day week-day-'+ ((currentWeekDay-1)%7) +'"';
                 dayCode += '><div><a>' + daysCounter + '</a></div></td>';
                 if (currentWeekDay % 7 == 0)
                     dayCode += "</tr>";
@@ -302,9 +296,9 @@ $.fn.bic_calendar = function(options) {
                 dayCode = "";
                 for (var i = (currentWeekDay % 7) + 1; i <= 7; i++) {
                     var dayCode = "";
-                    dayCode += '<td class="invalid-day';
-                    if (i == 7)
-                        dayCode += ' ultimo'
+                    dayCode += '<td ';
+                    //add weekDay
+                    dayCode += ' class="invalid-day week-day-'+ (i-1) +'"';
                     dayCode += '"></td>';
                     if (i == 7)
                         dayCode += '</tr>'
@@ -437,67 +431,38 @@ $.fn.bic_calendar = function(options) {
         /**
          * check if the user can mark days
          */
-        var daySelected = false;
         function checkIfEnableMark() {
             if (enableSelect == true) {
 
                 var eventBicCalendarSelect;
 
-                elem.on('click', 'td', function() {
+                elem.on('click', 'td.day', function() {
                     //if multiSelect
                     if (multiSelect == true) {
-                        if (daySelected == false) {
-                            //add class selection
-                            $(this).find('div').addClass('selection');
-                            daySelected = true;
+                        if (daySelected == '') {
+                            daySelected = $(this).data('date');
+                            markSelectedDays();
                         } else {
-                            if (firstDaySelected == '') {
-                                var oldSelected = elem.find('.selection');
-                                var newSelected = $(this).find('div');
-                                
+                            if (lastDaySelected == '') {
                                 //set firstDaySelected
-                                firstDaySelected = oldSelected.parent().data('date');
-
-                                //remove all selected classes
-                                elem.find('td.selection').removeClass('middle-selection selection first-selection last-selection');
-
-                                //create date object from current dates selecteds
-                                var oldSelectedDate = new Date(oldSelected.parent().data('date'));
-                                var newSelectedDate = new Date(newSelected.parent().data('date'));
-
-                                //create a loop adding day per loop to set days
-                                if (oldSelectedDate > newSelectedDate) {
-                                    //turn vars date
-                                    var tempSelectedDate = oldSelectedDate;
-                                    oldSelectedDate = newSelectedDate;
-                                    newSelectedDate = tempSelectedDate;
-                                    //set first date
-                                    newSelected.addClass('selection first-selection');
-                                } else {
-                                    //set last date
-                                    oldSelected.addClass('selection first-selection');
-                                }
-
-                                while (oldSelectedDate < newSelectedDate) {
-                                    oldSelectedDate.setDate(oldSelectedDate.getDate() + 1);
-                                    //add class middle-selection
-                                    $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').addClass('selection middle-selection');
-                                }
-                                $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').removeClass('middle-selection').addClass('selection last-selection');
-
+                                firstDaySelected = daySelected;
+                                lastDaySelected = $(this).data('date');
+                                
+                                markSelectedDays();
 
                                 //create n fire event
+                                //to change
                                 var eventBicCalendarSelect = new CustomEvent("bicCalendarSelect", {
                                     detail: {
                                         dateFirst: firstDaySelected,
-                                        dateLast: elem.find('.last-selection').parent().data('date'),
+                                        dateLast: lastDaySelected
                                     }
                                 });
                                 document.dispatchEvent(eventBicCalendarSelect);
                             } else {
                                 firstDaySelected = '';
                                 lastDaySelected = '';
-                                daySelected = false;
+                                daySelected = '';
                                 elem.find('.selection').removeClass('middle-selection selection first-selection last-selection');
                             }
                         }
@@ -515,6 +480,45 @@ $.fn.bic_calendar = function(options) {
                         document.dispatchEvent(eventBicCalendarSelect);
                     }
                 })
+            }
+        }
+
+        /**
+         * to mark selected dates
+         */
+        function markSelectedDays() {
+            if (daySelected != '' && firstDaySelected == '') {
+                var arrayDate = daySelected.split('/');
+                $('#bic_calendar_' + arrayDate[1] + '_' + arrayDate[0] + '_' + arrayDate[2] + ' div').addClass('selection');
+            } else if (firstDaySelected != '') {
+                //create array from dates
+                var arrayFirstDay = firstDaySelected.split('/');
+                var arrayLastDay = lastDaySelected.split('/');
+
+                //remove all selected classes
+                elem.find('td.selection').removeClass('selection');
+
+                //create date object from dates
+                var oldSelectedDate = new Date(firstDaySelected);
+                var newSelectedDate = new Date(lastDaySelected);
+
+                //create a loop adding day per loop to set days
+                //turn dates if >
+                if (oldSelectedDate > newSelectedDate) {
+                    //turn vars date
+                    var tempSelectedDate = oldSelectedDate;
+                    oldSelectedDate = newSelectedDate;
+                    newSelectedDate = tempSelectedDate;
+                }
+                //set first selection
+                $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').addClass('selection first-selection');
+                while (oldSelectedDate < newSelectedDate) {
+                    oldSelectedDate.setDate(oldSelectedDate.getDate() + 1);
+                    //set middle-selection
+                    $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').addClass('selection middle-selection');
+                }
+                //set last selection
+                $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').removeClass('middle-selection').addClass('selection last-selection');
             }
         }
 
