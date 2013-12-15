@@ -19,8 +19,13 @@ Options
 
 - events (array of event object)
 
+- startWeekDay (int)
+    - default: 0 
+*1 for english format. Mind the dayNames.
+
 - dayNames (array)
     - default: ["l", "m", "x", "j", "v", "s", "d"]
+*Did you change the startWeekDay? Change the order of this days then.
 
 - monthNames (array)
     - default: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]

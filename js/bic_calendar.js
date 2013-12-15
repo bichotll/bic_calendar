@@ -84,6 +84,10 @@ $.fn.bic_calendar = function(options) {
         if (typeof opts.displayYearController != 'undefined')
             displayYearController = opts.displayYearController;
 
+        var startWeekDay = 0;
+        if (typeof opts.startWeekDay != 'undefined')
+            startWeekDay = opts.startWeekDay;
+
         var firstDaySelected = '';
         var lastDaySelected = '';
         var daySelected = '';
@@ -319,6 +323,7 @@ $.fn.bic_calendar = function(options) {
         function calcNumberDayWeek(day, month, year) {
             var objFecha = new Date(year, month, day);
             var numDia = objFecha.getDay();
+            numDia += startWeekDay;
             if (numDia == 0)
                 numDia = 6;
             else
