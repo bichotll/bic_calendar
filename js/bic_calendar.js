@@ -1,13 +1,11 @@
 /*
+ *  Bic Calendar - v3.1.2
+ *  A simple twitter bootstrap calendar / agenda to mark events and select range of dates.
+ *  http://bichotll.github.io/bic_calendar
  *
- * bic calendar
- * Autor: bichotll
- * Web-autor: bic.cat
- * Web script: http://bichotll.github.io/bic_calendar/
- * Llicència Apache
- *
+ *  Made by bichotll
+ *  Under Apache License
  */
-
 $.fn.bic_calendar = function(options) {
 
     var opts = $.extend({}, $.fn.bic_calendar.defaults, options);
