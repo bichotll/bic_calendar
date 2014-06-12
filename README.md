@@ -1,7 +1,7 @@
 BIC Calendar
 ============
 
-en - BIC Calendar is a simple calendar to mark events and ranges of dates, a jQuery plugin and Twitter Bootstrap.
+en - BIC Calendar is a simple calendar to mark events and ranges of dates (and date picker), a jQuery plugin and Twitter Bootstrap.
 For more info check: [http://bichotll.github.io/bic_calendar/](http://bichotll.github.io/bic_calendar/)
 
 ca - BIC Calendar es un simple calendari per marcar esdeveniments i rangs de dates. Un plugin de jQuery i Twitter Bootstrap.
