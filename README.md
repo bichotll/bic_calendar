@@ -19,6 +19,10 @@ Options
 
 - events (array of event object)
 
+- date (string or date)
+    - default: the current date
+*The date to display, as a string in dd/MM/YYYY format, or as a Date object
+
 - startWeekDay (int)
     - default: 0 
 *1 for english format. Mind the dayNames.
