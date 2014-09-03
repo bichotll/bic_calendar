@@ -1,5 +1,5 @@
 /*
- *  Bic Calendar - v3.1.2
+ *  Bic Calendar - v3.2.2
  *  A simple twitter bootstrap calendar / agenda to mark events and select range of dates.
  *  http://bichotll.github.io/bic_calendar
  *
@@ -17,7 +17,6 @@ $.fn.bic_calendar = function(options) {
 
         /*** vars ***/
 
-
         //element called
         var elem = $(this);
 
@@ -29,6 +28,19 @@ $.fn.bic_calendar = function(options) {
         var calendarId = "bic_calendar";
 
         var events = opts.events;
+
+        //Date obj to calc the day
+        var objFecha;
+        if (opts.date) {
+          if (typeof opts.date == 'string') {
+            var arrayDate = opts.date.split('/');
+            objFecha = new Date(parseInt(arrayDate[2]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[0]));
+          } else {
+            objFecha = opts.date;
+          }
+        } else {
+          objFecha = new Date();
+        }
 
         var dayNames;
         if (typeof opts.dayNames != "undefined")
@@ -107,9 +119,6 @@ $.fn.bic_calendar = function(options) {
             daysMonthLayer = $('<table class="table">');
 
             listListeralsWeek();
-
-            //Date obj to calc the day
-            var objFecha = new Date();
 
             //current year n current month
             var month = objFecha.getMonth();
