@@ -28,6 +28,15 @@ $.fn.bic_calendar = function(options) {
         var calendarId = "bic_calendar";
 
         var events = opts.events;
+        
+        // change dates 02/11/2014 to 2/11/2014 
+        $.each(events, function(k, v) {
+            var array = v.date.split('/');
+            var d = parseInt(array[0]);
+            var m = parseInt(array[1]);
+            v = d + '/' + m +'/'+  array[2];
+            events[k].date = v;
+        });
 
         //Date obj to calc the day
         var objFecha;
