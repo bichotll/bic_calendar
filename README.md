@@ -63,6 +63,9 @@ Event object
 
 - date(string):
     - "17/8/1989"
+    - "09/09/2014"
+    - "09/9/2014"
+    - "09/12/2014"
 - title (string)
     - "Event Barberà"
 - link (string)
