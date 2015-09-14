@@ -406,7 +406,15 @@ $.fn.bic_calendar = function(options) {
 
                     var loopDayTd = $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_"));
                     var loopDayA = $('#' + calendarId + '_' + events[i].date.replace(/\//g, "_") + ' a');
-
+                    
+                    $(loopDayTd).hover(
+                        function() {
+                            $(this).find('a').tooltip('show');
+                        }, function() { 
+                            $(this).find('a').tooltip('hide');
+                        }
+                    );
+                    
                     loopDayTd.addClass('event');
 
                     loopDayA.attr('data-original-title', events[i].title);
