@@ -16,7 +16,7 @@
     padding: 5px;
 }
 .bic_calendar td a{
-    
+
 }
 .bic_calendar .header{
     padding: 10px 0 10px 0;
@@ -85,6 +85,9 @@
     border-left: 0;
     border-right: 0;
     border-radius: 0;
+}
+.bic_calendar .first-selection.last-selection{
+  border-radius: 6px 6px 6px 6px;
 }
 .bic_calendar .popover{
     color: #000;
