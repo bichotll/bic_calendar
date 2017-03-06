@@ -340,7 +340,7 @@ $.fn.bic_calendar = function(options) {
 
         /**
          * check if a date is correct
-         * 
+         *
          * @thanks http://kevin.vanzonneveld.net
          * @thanks http://www.desarrolloweb.com/manuales/manual-librerias-phpjs.html
          */
@@ -483,6 +483,7 @@ $.fn.bic_calendar = function(options) {
                                 lastDaySelected = '';
                                 daySelected = '';
                                 elem.find('.selection').removeClass('middle-selection selection first-selection last-selection');
+                                $('.bic_calendar .day a').css('cursor', 'pointer');
                             }
                         }
                     } else {
@@ -538,6 +539,7 @@ $.fn.bic_calendar = function(options) {
                 }
                 //set last selection
                 $('#bic_calendar_' + oldSelectedDate.getDate() + '_' + (parseInt(oldSelectedDate.getMonth()) + 1) + '_' + oldSelectedDate.getFullYear() + ' div').removeClass('middle-selection').addClass('selection last-selection');
+                $('.bic_calendar .day a').css('cursor', 'default');
             }
         }
 
